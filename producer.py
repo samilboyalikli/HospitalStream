@@ -3,10 +3,19 @@
 import random
 
 cities = ["Houston","Dallas","Jersey City","Washington","Boston"]
+age_ranges = ["child","adult","senior"]
+age_weights = [1,10,15]
+random_age_ranges = random.choices(age_ranges, weights=age_weights, k=1)
 
-random_age = random.randint(0,18)
-random_city = random.choice(cities)
-print(random_city, random_age)
+if random_age_ranges[0] == "child":
+    age = random.randint(0,18)
+elif random_age_ranges[0] == "adult":
+    age = random.randint(18,65)
+else:
+    age = random.randint(65,80)
+    
+city = random.choice(cities)
+print(city, age)
 
 #--------------------------------------------------------------------
 # import socket
