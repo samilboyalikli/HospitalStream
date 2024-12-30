@@ -23,6 +23,109 @@ def age():
     return age
 
 
+def wbc_for_children(age):
+    if age >= 0 and age <= 2:
+        value = random.randint(4000,19000)
+        return value
+    elif age >= 2 and age <= 12:
+        value = random.randint(3000,17000)
+        return value
+    else: 
+        value = random.randint(3000,15000)
+        return value
+
+
+def rbc_for_childer(age):
+    if age >= 0 and age <= 2:
+        value = random.randint(3500000,6500000)
+        return value
+    elif age >= 2 and age <= 12:
+        value = random.randint(3800000,5500000)
+        return value
+    else: 
+        value = random.randint(3800000,6000000)
+        return value
+
+def hb_for_children(age):
+    if age >= 0 and age <= 2:
+        value = random.randint(4000,19000)
+        return value
+    elif age >= 2 and age <= 12:
+        value = random.randint(3000,17000)
+        return value
+    else: 
+        value = random.randint(3000,15000)
+        return value
+
+
+def hm_for_childer(age):
+    if age >= 0 and age <= 2:
+        value = random.randint(4000,19000)
+        return value
+    elif age >= 2 and age <= 12:
+        value = random.randint(3000,17000)
+        return value
+    else: 
+        value = random.randint(3000,15000)
+        return value
+
+
+def platelet_for_children(age):
+    if age >= 0 and age <= 2:
+        value = random.randint(4000,19000)
+        return value
+    elif age >= 2 and age <= 12:
+        value = random.randint(3000,17000)
+        return value
+    else: 
+        value = random.randint(3000,15000)
+        return value
+
+
+def mcv_for_childer(age):
+    if age >= 0 and age <= 2:
+        value = random.randint(4000,19000)
+        return value
+    elif age >= 2 and age <= 12:
+        value = random.randint(3000,17000)
+        return value
+    else: 
+        value = random.randint(3000,15000)
+        return value
+
+
+def mch_for_children(age):
+    if age >= 0 and age <= 2:
+        value = random.randint(4000,19000)
+        return value
+    elif age >= 2 and age <= 12:
+        value = random.randint(3000,17000)
+        return value
+    else: 
+        value = random.randint(3000,15000)
+        return value
+
+
+def mchc_for_childer(age):
+    if age >= 0 and age <= 2:
+        value = random.randint(4000,19000)
+        return value
+    elif age >= 2 and age <= 12:
+        value = random.randint(3000,17000)
+        return value
+    else: 
+        value = random.randint(3000,15000)
+        return value
+
+
+def cbc(age):
+    if age >= 0 and age <= 18:
+        return "child"
+    elif age >= 18 and age <= 65:
+        return "adult"
+    else: return "senior"
+
+
 def city():
     cities = ["Houston","Dallas","Jersey City","Washington","Boston"]
     city = random.choice(cities)
@@ -30,10 +133,16 @@ def city():
 
 
 def case_production():
+    age_of_patience = age()
     case_dict = {
         "Name":select_random_from_csv("gender_name.csv", 13962).iloc[0, 1].upper(),
-        "Surname":select_random_from_csv('last_name.csv', 380410).iloc[0, 0].upper(),
-        "Age":age(),
+        "Surname":select_random_from_csv('last_name.csv', 380410).iloc[0, 0].upper(),  
+        "Age":age_of_patience,
+        "cbc":cbc(age_of_patience),
+        "dict": {
+            "first":"value",
+            "second":"value2"
+        },
         "Hospital":city().upper(),
         "Gender":select_random_from_csv("gender_name.csv", 13962).iloc[0, 0].upper()
     }
