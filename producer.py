@@ -51,8 +51,11 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         while time.time() - start_time < 60:
             case_json = json.dumps(case_production())
             case = case_json.encode('utf-8')
+            turn = random.randint(0,2)
+            if turn == 1:
+                time.sleep(5)
             s.sendall(case)
             print(f"Sent: {case}")
-            time.sleep(1)
+            time.sleep(0.5)
     except Exception as e:
         print(f"There is a problem. Problem is:\n{e}")
