@@ -228,12 +228,12 @@ def readable_time(timestamp):
 
 def case_production():
     age_of_patience = age()
-    gender_of_patience = select_random_from_csv("./gender_name.csv", 13962).iloc[0, 0].upper()
+    gender_of_patience = select_random_from_csv("../gender_name.csv", 13962).iloc[0, 0].upper()
     age_range = cbc(age_of_patience)
     blood_values_of_patience = blood_values(age_range=age_range, age=age_of_patience, gender=gender_of_patience)
     return {
-        "Name":select_random_from_csv("./gender_name.csv", 13962).iloc[0, 1].upper(),
-        "Surname":select_random_from_csv('./last_name.csv', 380410).iloc[0, 0].upper(),  
+        "Name":select_random_from_csv("../gender_name.csv", 13962).iloc[0, 1].upper(),
+        "Surname":select_random_from_csv('../last_name.csv', 380410).iloc[0, 0].upper(),  
         "Age":age_of_patience,
         "cbc":age_range,
         "blood values":blood_values_of_patience,
@@ -251,13 +251,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     try: 
         s.connect((host, port))
         s.sendall("producer connected".encode('utf-8'))
-        while time.time() - start_time < 60:
+        while time.time() - start_time < 300:
             case_json = json.dumps(case_production(), indent=4)
             case = case_json.encode('utf-8')
             turn = random.randint(0,2)
             if turn == 1:
-                # original: time.sleep(5) | this demo for set some processes:
-                time.sleep(0.5)
+                time.sleep(5)
             s.sendall(case)
             print(f"Sent: {case}")
             time.sleep(0.5)
