@@ -221,12 +221,6 @@ def blood_values(age_range,age,gender):
     else: return senior_values(gender=gender)
 
 
-def city():
-    cities = ["Houston","Dallas","Jersey City","Washington","Boston"]
-    city = random.choice(cities)
-    return city
-
-
 def readable_time(timestamp):
     local_time = time.localtime(timestamp)
     return time.strftime("%Y-%m-%d %H:%M:%S", local_time)
@@ -234,16 +228,16 @@ def readable_time(timestamp):
 
 def case_production():
     age_of_patience = age()
-    gender_of_patience = select_random_from_csv("gender_name.csv", 13962).iloc[0, 0].upper()
+    gender_of_patience = select_random_from_csv("./gender_name.csv", 13962).iloc[0, 0].upper()
     age_range = cbc(age_of_patience)
     blood_values_of_patience = blood_values(age_range=age_range, age=age_of_patience, gender=gender_of_patience)
     return {
-        "Name":select_random_from_csv("gender_name.csv", 13962).iloc[0, 1].upper(),
-        "Surname":select_random_from_csv('last_name.csv', 380410).iloc[0, 0].upper(),  
+        "Name":select_random_from_csv("./gender_name.csv", 13962).iloc[0, 1].upper(),
+        "Surname":select_random_from_csv('./last_name.csv', 380410).iloc[0, 0].upper(),  
         "Age":age_of_patience,
         "cbc":age_range,
         "blood values":blood_values_of_patience,
-        "Hospital":city().upper(),
+        "Hospital":"DALLAS HOSPITAL",
         "Gender":gender_of_patience,
         "Time":readable_time(timestamp=time.time())
     }
