@@ -46,23 +46,24 @@ def rbc_for_children(age):
         value = random.randint(3800000,6000000)
         return value
 
-def hb_for_children(age,gender):
+
+def hb_for_children(age,m_or_f):
     if age >= 0 and age <= 2:
-        value = random.randint(9.0,15.0)
+        value = random.uniform(9.0,15.0)
         return value
     elif age >= 2 and age <= 12:
-        value = random.randint(10.0,16.0)
+        value = random.uniform(10.0,16.0)
         return value
     else: 
-        if gender == "MALE":
-            value = random.randint(12.0,17.0)
+        if m_or_f == "MALE":
+            value = random.uniform(12.0,17.0)
             return value
         else:
-            value = random.randint(11.0,16.0)
+            value = random.uniform(11.0,16.0)
             return value    
 
 
-def hm_for_children(age,gender):
+def hm_for_children(age,m_or_f):
     if age >= 0 and age <= 2:
         value = random.randint(30,45)
         return value
@@ -70,7 +71,7 @@ def hm_for_children(age,gender):
         value = random.randint(30,45)
         return value
     else: 
-        if gender == "MALE":
+        if m_or_f == "MALE":
             value = random.randint(35,55)
             return value
         else:
@@ -134,24 +135,15 @@ def cbc(age):
     else: return "senior"
 
 
-# "wbc":wbc_for_children(age),
-# "rbc":rbc_for_children(age),
-# "hb":hb_for_children(age,gender),
-# "hm":hm_for_children(age,gender),
-# "mcv":mcv_for_children(age),
-# "mch":mch_for_children(age),
-# "mchc":mchc_for_children(age)
-
-
-def children_values():
+def children_values(age, gender):
     return {
-        "wbc":"water blood cell",
-        "rbc":"red blood cell",
-        "hb":"hemoglobin",
-        "hm":"hematocrit",
-        "mcv":"mean corpuscular volume",
-        "mch":"mean corpuscular hemoglobin",
-        "mchc":"mean corpuscular hemoglobin concentration"
+        "wbc":wbc_for_children(age),
+        "rbc":rbc_for_children(age),
+        "hb":hb_for_children(age,m_or_f=gender),
+        "hm":hm_for_children(age,m_or_f=gender),
+        "mcv":mcv_for_children(age),
+        "mch":mch_for_children(age),
+        "mchc":mchc_for_children(age)
     }
 
 
@@ -179,11 +171,13 @@ def senior_values():
     }
 
 
-def blood_values(age_range):
-    if age_range == "child":
-        return children_values()
-    elif age_range == "adult":
+def blood_values(r,age,gender):
+    if r == "child":
+        return children_values(age, gender=gender)
+    elif r == "adult":
         return adult_values()
+    elif r == "kamuran":
+        return f"{gender} kamuran"
     else: return senior_values()
 
 
@@ -195,17 +189,18 @@ def city():
 
 def case_production():
     age_of_patience = age()
+    gender_of_patience = select_random_from_csv("gender_name.csv", 13962).iloc[0, 0].upper()
     age_range = cbc(age_of_patience)
-    case_dict = {
+    blood_values_of_patience = blood_values(age_range, age=age_of_patience, gender=gender_of_patience)
+    return {
         "Name":select_random_from_csv("gender_name.csv", 13962).iloc[0, 1].upper(),
         "Surname":select_random_from_csv('last_name.csv', 380410).iloc[0, 0].upper(),  
         "Age":age_of_patience,
         "cbc":age_range,
-        "blood values": {blood_values()},
+        "blood values":blood_values_of_patience,
         "Hospital":city().upper(),
-        "Gender":select_random_from_csv("gender_name.csv", 13962).iloc[0, 0].upper()
+        "Gender":gender_of_patience
     }
-    return case_dict
 
 
 host = "127.0.0.1"
@@ -221,7 +216,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             case = case_json.encode('utf-8')
             turn = random.randint(0,2)
             if turn == 1:
-                time.sleep(5)
+                # original: time.sleep(5) | this demo for set some processes:
+                time.sleep(0.5)
             s.sendall(case)
             print(f"Sent: {case}")
             time.sleep(0.5)
