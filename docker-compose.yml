@@ -1,0 +1,32 @@
+version: '3'
+services: 
+  app1:
+    build: .
+    command: python3 /hospitals/atlanta.py
+  app2:
+    build: .
+    command: python3 /hospitals/boston.py
+  app3:
+    build: .
+    command: python3 /hospitals/chicago.py
+  app4:
+    build: .
+    command: python3 /hospitals/dallas.py
+  app5:
+    build: .
+    command: python3 /hospitals/houston.py
+  app6:
+    build: .
+    command: python3 /hospitals/jersey.py
+  app7:
+    build: .
+    command: python3 /hospitals/miami.py
+  app8:
+    build: .
+    command: python3 /hospitals/newyork.py
+  app9:
+    build: .
+    command: python3 /hospitals/sanfrancisco.py
+  app10:
+    build: .
+    command: python3 /hospitals/washington.py
