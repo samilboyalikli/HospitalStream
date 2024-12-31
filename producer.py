@@ -101,6 +101,40 @@ def mchc_for_children(age):
         return random.randint(30,40)
 
 
+def wbc_for_adult():
+    return random.randint(3000,12000)
+
+
+def rbc_for_adult(gender):
+    if gender == "MALE":
+        return random.randint(4500000,6500000)
+    else: return random.randint(3700000,5700000)
+
+
+def hb_for_adult(gender):
+    if gender == "MALE":
+        return round(random.uniform(12.0,19.0),1)
+    else: return round(random.uniform(10.0,17.0),1)
+
+
+def hm_for_adult(gender):
+    if gender == "MALE":
+        return random.randint(35,55)
+    else: return random.randint(30,50)
+
+
+def mcv_for_adult():
+    return random.randint(70,120)
+
+
+def mch_for_adult():
+    return random.randint(20,40)
+
+
+def mchc_for_adult():
+    return random.randint(25,40)
+
+
 def cbc(age):
     if age >= 0 and age <= 18:
         return "child"
@@ -111,25 +145,25 @@ def cbc(age):
 
 def children_values(age, gender):
     return {
-        "wbc":wbc_for_children(age),
-        "rbc":rbc_for_children(age),
-        "hb":hb_for_children(age,gender=gender),
-        "hm":hm_for_children(age,gender=gender),
-        "mcv":mcv_for_children(age),
-        "mch":mch_for_children(age),
-        "mchc":mchc_for_children(age)
+        "WBC":wbc_for_children(age),
+        "RBC":rbc_for_children(age),
+        "Hb":hb_for_children(age,gender=gender),
+        "Hct":hm_for_children(age,gender=gender),
+        "MCV":mcv_for_children(age),
+        "MCH":mch_for_children(age),
+        "MCHC":f"{mchc_for_children(age)}%"
     }
 
 
-def adult_values():
+def adult_values(gender):
     return {
-        "wbc":"water blood cell",
-        "rbc":"red blood cell",
-        "hb":"hemoglobin",
-        "hm":"hematocrit",
-        "mcv":"mean corpuscular volume",
-        "mch":"mean corpuscular hemoglobin",
-        "mchc":"mean corpuscular hemoglobin concentration"
+        "WBC":wbc_for_adult(),
+        "RBC":rbc_for_adult(gender=gender),
+        "Hb":hb_for_adult(gender=gender),
+        "Hct":hm_for_adult(gender=gender),
+        "MCV":mcv_for_adult(),
+        "MCH":mch_for_adult(),
+        "MCHC":f"{mchc_for_adult()}%"
     }
 
 
@@ -145,13 +179,11 @@ def senior_values():
     }
 
 
-def blood_values(r,age,gender):
-    if r == "child":
+def blood_values(age_range,age,gender):
+    if age_range == "child":
         return children_values(age, gender=gender)
-    elif r == "adult":
-        return adult_values()
-    elif r == "kamuran":
-        return f"{gender} kamuran"
+    elif age_range == "adult":
+        return adult_values(gender=gender)
     else: return senior_values()
 
 
@@ -165,7 +197,7 @@ def case_production():
     age_of_patience = age()
     gender_of_patience = select_random_from_csv("gender_name.csv", 13962).iloc[0, 0].upper()
     age_range = cbc(age_of_patience)
-    blood_values_of_patience = blood_values(age_range, age=age_of_patience, gender=gender_of_patience)
+    blood_values_of_patience = blood_values(age_range=age_range, age=age_of_patience, gender=gender_of_patience)
     return {
         "Name":select_random_from_csv("gender_name.csv", 13962).iloc[0, 1].upper(),
         "Surname":select_random_from_csv('last_name.csv', 380410).iloc[0, 0].upper(),  
