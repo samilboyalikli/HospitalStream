@@ -25,106 +25,80 @@ def age():
 
 def wbc_for_children(age):
     if age >= 0 and age <= 2:
-        value = random.randint(4000,19000)
-        return value
+        return random.randint(4000,19000)
     elif age >= 2 and age <= 12:
-        value = random.randint(3000,17000)
-        return value
+        return random.randint(3000,17000)
     else: 
-        value = random.randint(3000,15000)
-        return value
+        return random.randint(3000,15000)
 
 
 def rbc_for_children(age):
     if age >= 0 and age <= 2:
-        value = random.randint(3500000,6500000)
-        return value
+        return random.randint(3500000,6500000)
     elif age >= 2 and age <= 12:
-        value = random.randint(3800000,5500000)
-        return value
+        return random.randint(3800000,5500000)
     else: 
-        value = random.randint(3800000,6000000)
-        return value
+        return random.randint(3800000,6000000)
 
 
-def hb_for_children(age,m_or_f):
+def hb_for_children(age,gender):
     if age >= 0 and age <= 2:
-        value = random.uniform(9.0,15.0)
-        return value
+        return round(random.uniform(9.0,15.0),1)
     elif age >= 2 and age <= 12:
-        value = random.uniform(10.0,16.0)
-        return value
+        return round(random.uniform(10.0,16.0),1)
     else: 
-        if m_or_f == "MALE":
-            value = random.uniform(12.0,17.0)
-            return value
+        if gender == "MALE":
+            return round(random.uniform(12.0,17.0),1)
         else:
-            value = random.uniform(11.0,16.0)
-            return value    
+            return round(random.uniform(11.0,16.0),1)    
 
 
-def hm_for_children(age,m_or_f):
+def hm_for_children(age,gender):
     if age >= 0 and age <= 2:
-        value = random.randint(30,45)
-        return value
+        return random.randint(30,45)
     elif age >= 2 and age <= 12:
-        value = random.randint(30,45)
-        return value
+        return random.randint(30,45)
     else: 
-        if m_or_f == "MALE":
-            value = random.randint(35,55)
-            return value
+        if gender == "MALE":
+            return random.randint(35,55)
         else:
-            value = random.randint(32,47)
-            return value    
+            return random.randint(32,47)    
 
 
 def platelet_for_children(age):
     if age >= 0 and age <= 2:
-        value = random.randint(125000,475000)
-        return value
+        return random.randint(125000,475000)
     elif age >= 2 and age <= 12:
-        value = random.randint(125000,475000)
-        return value
+        return random.randint(125000,475000)
     else: 
-        value = random.randint(125000,475000)
-        return value
+        return random.randint(125000,475000)
 
 
 def mcv_for_children(age):
     if age >= 0 and age <= 2:
-        value = random.randint(65,90)
-        return value
+        return random.randint(65,90)
     elif age >= 2 and age <= 12:
-        value = random.randint(70,95)
-        return value
+        return random.randint(70,95)
     else: 
-        value = random.randint(75,100)
-        return value
+        return random.randint(75,100)
 
 
 def mch_for_children(age):
     if age >= 0 and age <= 2:
-        value = random.randint(20,35)
-        return value
+        return random.randint(20,35)
     elif age >= 2 and age <= 12:
-        value = random.randint(20,37)
-        return value
+        return random.randint(20,37)
     else: 
-        value = random.randint(20,40)
-        return value
+        return random.randint(20,40)
 
 
 def mchc_for_children(age):
     if age >= 0 and age <= 2:
-        value = random.randint(25,40)
-        return value
+        return random.randint(25,40)
     elif age >= 2 and age <= 12:
-        value = random.randint(30,40)
-        return value
+        return random.randint(30,40)
     else: 
-        value = random.randint(30,40)
-        return value
+        return random.randint(30,40)
 
 
 def cbc(age):
@@ -139,8 +113,8 @@ def children_values(age, gender):
     return {
         "wbc":wbc_for_children(age),
         "rbc":rbc_for_children(age),
-        "hb":hb_for_children(age,m_or_f=gender),
-        "hm":hm_for_children(age,m_or_f=gender),
+        "hb":hb_for_children(age,gender=gender),
+        "hm":hm_for_children(age,gender=gender),
         "mcv":mcv_for_children(age),
         "mch":mch_for_children(age),
         "mchc":mchc_for_children(age)
