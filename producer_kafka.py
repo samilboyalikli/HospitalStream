@@ -249,7 +249,7 @@ def case_production():
     }
 
 
-producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serialiser=lambda v: json.dumps(v, indent=4).encode('utf-8'))
+producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda v: json.dumps(v, indent=4).encode('utf-8'))
 start_time = time.time()
 
 try:
@@ -259,7 +259,7 @@ try:
         turn = random.randint(0, 2)
         if turn == 1:
             time.sleep(0.5)
-        producer.send("producer_kafka", case)
+        producer.send("hospital_kafka", case)
         print(f"Sent: {case}")
         time.sleep(0.5)
 except Exception as e:
