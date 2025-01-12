@@ -3,7 +3,7 @@ import json
 
 # Kafka Consumer'ı oluştur
 consumer = KafkaConsumer(
-    'your_kafka_topic',                # Tüketilecek Kafka konusu
+    'hospital_kafka',                # Tüketilecek Kafka konusu
     bootstrap_servers='localhost:9092',  # Kafka broker adresi
     auto_offset_reset='earliest',        # İlk mesajdan başlamak için
     enable_auto_commit=True,             # Mesajları otomatik işaretle
