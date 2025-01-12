@@ -1,6 +1,6 @@
+from kafka import KafkaProducer
 import random
 import pandas
-import socket
 import time
 import json
 
@@ -249,23 +249,21 @@ def case_production():
     }
 
 
-host = "127.0.0.1"
-port = 5005
+producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda v: json.dumps(v, indent=4).encode('utf-8'))
 start_time = time.time()
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    try: 
-        s.connect((host, port))
-        s.sendall("producer connected".encode('utf-8'))
-        while time.time() - start_time < 60:
-            case_json = json.dumps(case_production(), indent=4)
-            case = case_json.encode('utf-8')
-            turn = random.randint(0,2)
-            if turn == 1:
-                # original: time.sleep(5) | this demo for set some processes:
-                time.sleep(0.5)
-            s.sendall(case)
-            print(f"Sent: {case}")
+try:
+    print("Producer started...")
+    while time.time() - start_time < 60:
+        case = case_production()
+        turn = random.randint(0, 2)
+        if turn == 1:
             time.sleep(0.5)
-    except Exception as e:
-        print(f"There is a problem. Problem is:\n{e}")
+        producer.send("hospital_kafka", case)
+        print(f"Sent: {case}")
+        time.sleep(0.5)
+except Exception as e:
+    print(f"An error occured:\n{e}")
+finally:
+    producer.close()
+    print("Producer finished.")
