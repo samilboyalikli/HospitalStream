@@ -1,6 +1,6 @@
-from kafka import KafkaProducer
 import random
 import pandas
+import socket
 import time
 import json
 
@@ -221,12 +221,6 @@ def blood_values(age_range,age,gender):
     else: return senior_values(gender=gender)
 
 
-def city():
-    cities = ["Houston","Dallas","Jersey City","Washington","Boston"]
-    city = random.choice(cities)
-    return city
-
-
 def readable_time(timestamp):
     local_time = time.localtime(timestamp)
     return time.strftime("%Y-%m-%d %H:%M:%S", local_time)
@@ -234,36 +228,37 @@ def readable_time(timestamp):
 
 def case_production():
     age_of_patience = age()
-    gender_of_patience = select_random_from_csv("gender_name.csv", 13962).iloc[0, 0].upper()
+    gender_of_patience = select_random_from_csv("../gender_name.csv", 13962).iloc[0, 0].upper()
     age_range = cbc(age_of_patience)
     blood_values_of_patience = blood_values(age_range=age_range, age=age_of_patience, gender=gender_of_patience)
     return {
-        "Name":select_random_from_csv("gender_name.csv", 13962).iloc[0, 1].upper(),
-        "Surname":select_random_from_csv('last_name.csv', 380410).iloc[0, 0].upper(),  
+        "Name":select_random_from_csv("../gender_name.csv", 13962).iloc[0, 1].upper(),
+        "Surname":select_random_from_csv('../last_name.csv', 380410).iloc[0, 0].upper(),  
         "Age":age_of_patience,
         "cbc":age_range,
         "blood values":blood_values_of_patience,
-        "Hospital":city().upper(),
+        "Hospital":"PHOENIX HOSPITAL",
         "Gender":gender_of_patience,
         "Time":readable_time(timestamp=time.time())
     }
 
 
-producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda v: json.dumps(v, indent=4).encode('utf-8'))
+host = "127.0.0.1"
+port = 5005
 start_time = time.time()
 
-try:
-    print("Producer started...")
-    while time.time() - start_time < 60:
-        case = case_production()
-        turn = random.randint(0, 2)
-        if turn == 1:
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    try: 
+        s.connect((host, port))
+        s.sendall("producer connected".encode('utf-8'))
+        while time.time() - start_time < 300:
+            case_json = json.dumps(case_production(), indent=4)
+            case = case_json.encode('utf-8')
+            turn = random.randint(0,2)
+            if turn == 1:
+                time.sleep(5)
+            s.sendall(case)
+            print(f"Sent: {case}")
             time.sleep(0.5)
-        producer.send("hospital_kafka", case)
-        print(f"Sent: {case}")
-        time.sleep(0.5)
-except Exception as e:
-    print(f"An error occured:\n{e}")
-finally:
-    producer.close()
-    print("Producer finished.")
+    except Exception as e:
+        print(f"There is a problem. Problem is:\n{e}")
