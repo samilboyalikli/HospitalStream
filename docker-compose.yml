@@ -24,10 +24,131 @@ services:
     depends_on:
       - zookeeper
 
-  producer:
+  atlanta:
     build:
       context: ./hospitals
-    container_name: producer
+    command: python3 atlanta.py
+    container_name: atlanta
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+
+  boston:
+    build:
+      context: ./hospitals
+    command: python3 boston.py
+    container_name: boston
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+
+  chicago:
+    build:
+      context: ./hospitals
+    command: python3 chicago.py
+    container_name: chicago
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+
+  dallas:
+    build:
+      context: ./hospitals
+    command: python3 dallas.py
+    container_name: dallas
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+  
+  detroit:
+    build:
+      context: ./hospitals
+    command: python3 detroit.py
+    container_name: detroit
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+  
+  houston:
+    build:
+      context: ./hospitals
+    command: python3 houston.py
+    container_name: houston
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+  
+  jersey:
+    build:
+      context: ./hospitals
+    command: python3 jersey.py
+    container_name: jersey
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+  
+  miami:
+    build:
+      context: ./hospitals
+    command: python3 miami.py
+    container_name: miami
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+  
+  newyork:
+    build:
+      context: ./hospitals
+    command: python3 newyork.py
+    container_name: newyork
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+  
+  phoenix:
+    build:
+      context: ./hospitals
+    command: python3 phoenix.py
+    container_name: phoenix
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+  
+  sanfrancisco:
+    build:
+      context: ./hospitals
+    command: python3 sanfrancisco.py
+    container_name: sanfrancisco
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+  
+  seattle:
+    build:
+      context: ./hospitals
+    command: python3 seattle.py
+    container_name: seattle
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+  
+  washington:
+    build:
+      context: ./hospitals
+    command: python3 washington.py
+    container_name: washington
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     depends_on:
@@ -41,4 +162,3 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     depends_on:
       - kafka
-    
