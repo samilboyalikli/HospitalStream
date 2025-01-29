@@ -246,6 +246,7 @@ def case_production():
 
 producer = KafkaProducer(bootstrap_servers='kafka:9092', value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 start_time = time.time()
+message_count = 0
 
 try:
     print("Producer started...")
@@ -256,11 +257,14 @@ try:
             time.sleep(5)
         producer.send("hospital_kafka", case)
         print(f"Sent: {case}")
+        message_count = message_count + 1
         time.sleep(0.5)
 except Exception as e:
     print(f"An error occured:\n{e}")
 finally:
     sys.stdout.flush()
-    producer.send("hospital_kafka", "info - Producer finished.")
+    producer.send("hospital_kafka", f"Send {message_count} messages from Seattle Hospital.")
+    producer.send("hospital_kafka", "info - Seattle stream finished.")
+    producer.send("hospital_kafka", "info - a producer finished.")
     producer.close()
     print("Producer finished.")
