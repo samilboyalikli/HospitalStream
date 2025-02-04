@@ -1,0 +1,40 @@
+TODO
+1. closing mekanizması eklenecek.
+  1.1. distributor işlemleri durdurduğunda children topic'e "Distributor stopped." cümlesini gönderecek.
+      STATUS | distributor'daki producer'da bir lambda func var. orada her data encode ediliyor. (`encode('utf-8')`)
+      STATUS | distributor producer'ındaki lambda fonksiyonunda her data json'dan python ögesine dönüştürülüyor (`json.dumps()`)
+      ENH | o halde oluşturulacak datalar json ögesi olmalı veya json'a uyumlu olmalı.
+      STATUS | distributor'daki mesaj dict ögesi.
+      STATUS | distributor mesajı send ediyor.
+  1.2. children topic'teki consumer, "Distributor stopped." cümlesini okuduğunda `consumer.close()` kodunu çalıştıracak.
+      STATUS | children topic'teki consumer'da bir lambda func var. orada her data decode ediliyor. (`decode('utf-8')`)
+      STATUS | children topic consumer'ındaki lambda fonksiyonu her datayı python ögesinden json'a dönüştürüyor. (`json.loads()`)
+      ENH | o halde okuma mekanizması json ögesi beklemeli veya json'a uyumlu bir şey beklemeli.
+      STATUS | consumer, try bloğunu çalıştırmadı.
+      ENH | o halde try bloğu koymayacağız ve sadece distributor'un yolladığı son mesajın okunmasını deneyeceğiz.
+      STATUS | consumer, dict ögesini okudu ve print etti.
+      ENH | o halde dict ögesinin sadece value'sünü okuyacak bir kod eklemeliyiz. (sanırım: `get()` fonksiyonu iş görüyor.)
+      STATUS | consumer, dict ögesinin value'sünü okumaya çalıştığımız bir try bloğunda `none` döndü.
+      STATUS | consumer, dict ögesini okuyamadı.
+      ENH | dict ögesinin sadece value'sünü kontrol etme stratejisini sonlandırdım, sadece son veriyi okumasını sağlayacağız.
+      STATUS | son veriyi  bir türlü okuyamıyor.
+      ENH | sistemi başlatmaya zookeeper katmanından devam edeceğiz.
+      STATUS | sistemi zookeeper katmanında başlattığımda children consumer'ı datayı okuyabildi.
+      ENH | o halde bunu 3 defa daha deneyeceğiz ve problemin buraya dayandığını kesinleştireceğiz.
+      STATUS | ikinci denemede children consumer datayı okuyamadı, yani sorun zookeeper'ın yeniden başlatılamaması değil.
+      ENH | copilot'la konuşmalarımdan birinde distributor'daki `send()` işleminden sonra `flush()` metodu kullandığını farkettim.
+      STATUS | `flush()` ekledikten sonra data gözüktü.
+      ENH | şimdi çözümün bu olduğundan emin olmak için 3 kere daha deneyeceğim.
+      STATUS | ikinci deneme de başarılı.
+      STATUS | üçüncü deneme de başarılı.
+      ENH | o halde artık dict ögesinin sadece value'sünün okunmasını sağlayabiliriz.
+      STATUS | dict ögesinin value'sü okunamadı ama data hala okunabiliyor ve print edilebiliyor.
+      ENH | o halde dict ögesinin value'sünü okuyan if bloğuna `flush()` metodu ekleyebilirim.
+      BUG | An error occured: 'KafkaConsumer' object has no attribute 'flush'
+      ENH | o halde `flush()` func'ı sys modülünden çekeceğiz.
+      STATUS | value'yü print etmedi ama datayı ediyor.
+      ENH | `sys.stdout.flush()` metodunun yerini değiştirip tekrar deneyeceğiz.
+      STATUS | value'yü print etmedi ama datayı ediyor.
+      ENH | sonsuz döngüden çıkmak için if bloğuna break ekliyorum.
+      ENH | consumer'un düzgün kapanması için try bloğuna finally ekliyorum.
+      STATUS | if bloğu ve try bloğu sorunsuz çalıştı. consumer başarılı biçimde sona erdirildi \m/
