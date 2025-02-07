@@ -1,0 +1,9 @@
+TODO
+(ertelendi) 1. topic counterlarıyla distributor counterlarını karşılaştıran bir comparator servisi kodlanacak.
+  (ertelendi) ENH | distributor countları comparator/counts.json dosyasına yazacak.
+  (ertelendi) ENH | topics/children countunu comparator/counts.json dosyasına yazacak.
+  (ertelendi) ENH | topics/adult countunu comparator/counts.json dosyasına yazacak.
+  (ertelendi) ENH | topics/senior countunu comparator/counts.json dosyasına yazacak.
+  STATUS | comparator işlemlerini projenin sonuna saklayacağız, çünkü bu testingle ilgili bir süreç.
+2. eğer comparator izin verirse childrentopic'e ilk spark analyzer'ı kodlanacak.
+3. childrentopic analyzer'ı anlık analizler yapıp analyzed_data topic'ine yollayacak.
