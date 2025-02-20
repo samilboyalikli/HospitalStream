@@ -1,0 +1,19 @@
+TODO
+1. childrentopic'e spark entegre edilecek.
+  1.1. spark install edilip kodlanacak.
+  [STATUS] bu kısım zaten halledilmişti (topics/children/analyzer/analyzer.py)
+  1.2. JVM install edilecek.
+  [ENH] docker image kullanarak spark'ı aktif ediyoruz. 
+  [BUG] ERROR ==> Invalid mode standalone. Supported types are 'master/worker'
+  [ENH] o halde SPARK_MODE=local yapacağız.
+  [BUG] ERROR ==> Invalid mode local. Supported types are 'master/worker'
+  [ENH] o halde spark_master, spark_worker servisleriyle çalışmalıyız.
+  [ENH] `docker exec` ile manuel olarak terminali açıp oradan analyzer'ı çalıştırmayı deniyoruz.
+  [BUG] python3: can't open file '/topics/children/analyzer/analyzer.py': [Errno 2] No such file or directory
+  [ENH] dosya yolunun nereden başladığından emin oluyoruz.
+  [STATUS] dosya yolu spark'ın kendi dosyalarından başlıyor. sıfırdan ve pc'den bağımsız biçimde. (çünkü docker ortamında)
+  [ENH] o halde bir şekilde analyzer'ı master'a kopyalamalıyız.
+  [ENH] docker'a bir volume ekleyip, yolu ekliyoruz.
+  [BUG] Error response from daemon: invalid mount config for type "volume": invalid mount path: 'topics/children/analyzer/analyzer.py' mount path must be absolute
+  [ENH] projeye biraz ara verip, docker-spark ilişkisini çözmeye odaklanmalıyız.
+  [ENH] batch data analiz ettiğim bir docker-spark tutorialı hazırlayacağım.
