@@ -1,0 +1,1 @@
+[STATUS] I'm triyg to entegrate kafta to the docker-spark demo.
