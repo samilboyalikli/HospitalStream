@@ -1,0 +1,4 @@
+TODO
+1. children_analyzer spark analiziyle birlikte çalıştırılacak.
+2. aynı çözüm adult_analyzer ve senior_analyzer olarak da kodlanacak.
+3. consumer analyzed_stream'deki sonuçları renkli okuyacak nitelikte kodlanacak.
