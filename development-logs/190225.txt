@@ -1,0 +1,32 @@
+TODO
+    1. tüm topiclerin çalışıp çalışmadığı kontrol edilecek.
+        [BUG] failed to solve: process "/bin/sh -c tar -xvzf /opt/spark-3.5.4-bin-hadoop3.tgz -C /opt/" did not complete successfully: exit code: 1
+        [ENH] tar komutu yorum satırına alınıp etkileşimli terminalden manuel olarak dosya açılacak.
+        [SUCCESSFUL] analyzed_stream çalışmış ama biraz geç sanırım.
+        [INVALID] şu komutla birlikte geçmiş topicler okunabiliyor: `/usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic analyzed_stream --from-beginning`
+        [ENH] children topic'inin counter'ını latest'ken earliest yaptım. bakalım baştan itibaren okuyabilecek mi?
+        [SUCCESSFUL] okudu.
+        [INVALID] .tgz dosyalarının indirilmesi çok zaman alıyor.
+        [ENH] geçici olarak spark-modules'e yerleştirip volume olarak servise tanımlayabiliriz.
+        [BUG] validating /mnt/c/Users/cenavar/Desktop/hospital-simulation/docker-compose.yml: services.children Additional property volume is not allowed
+        [ENH] volume'ları volumes olarak düzelttim.
+        [SUCCESSFUL] children, adult ve senior topic'lerine volumes başarıyla aktarılmış.
+        [ENH] pyspark'ı da spark-modules'e ekleyebiliriz.
+        [ENH] pyspark'ı install etmeden spark-submit yapmayı deneyebilirim.
+        [ENH] spark'ı path'e eklemem gerekiyor.
+        [STATUS] kısayolu güncelledim: `RUN ln -s /opt/spark-modules/spark-3.5.4-bin-hadoop3 /opt/spark`
+        [STATUS] spark'ı path'e ekledim.
+        [SUCCESSFUL] spark-submit komutu başarıyla çalıştı.
+        [ENH] şimdi manuel yaptığım tüm işlemleri otomatize edebilirim.
+            1. kısayol güncellenecek. (checked)
+            2. spark/bin path'e eklenecek: `export PATH=$PATH:/opt/spark/bin` (checked)
+            3. komut manuel olarak çalıştırılacak. (checked)
+        [SUCCESSFUL] tüm işlemler başarıyla çalıştı. ayriyeten pyspark install etmeye gerek kalmadı.
+        [ENH] şimdi tüm topicleri aynı anda çalıştırmaya çalışabiliriz.
+        [BUG] Error response from daemon: driver failed programming external connectivity on endpoint adult (4f118432ceae4cda756d9f5d2e391962f47d53bae232a6822fcd835a30969ce5): Bind for 0.0.0.0:7077 failed: port is already allocated
+        [ENH] 7077:7077 portunu 7076:7077 olarak değiştirdim.
+        [BUG] Error response from daemon: driver failed programming external connectivity on endpoint adult (028cad9216f02ec67a216266dd7882e698cb601cd99641880b42a01599d3f7e7): Bind for 0.0.0.0:8080 failed: port is already allocated
+        [ENH] 8080:8080 portunu 8079:8080 olarak değiştirdim.
+        [SUCCESSFUL] tüm topic service'leri başarıyla çalıştı.
+    2. consumer'a gelen kafka mesajları analiz edilecek.
+    3. consumer'a gelen kafka mesajlarını sadeleştirecek bir strateji bulunacak.
