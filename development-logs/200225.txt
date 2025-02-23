@@ -1,0 +1,20 @@
+TODO
+    1. port çakışması olup olmadığı test edilecek.
+        [INVALID] bir hata yok ama analyzed_stream topic'inde sadece 10 mesaj var.
+        [ENH] analyzed_stream'e gönderilen sonuçlar detaylandırılacak.
+        [INVALID] analyzed_stream'de epey az data var.
+        [ENH] hepsinden önce çalışma biçimini otomatize etmeliyim.
+            1. kafka'dan sonra producer'ların çalışmasını geciktirmeliyim. (checked)
+            2. children, adult ve senior'un çalışmasını otomatize etmeliyim. (checked)
+    2. consumer'a gelen kafka mesajları analiz edilecek.
+        [STATUS] çift key'li bir dict.
+        [STATUS] ilk key, mesaj. ikinci key, timestamp.
+        [ENH] tüm mesajların analyzed_stream'e gönderilmeme sebebinin timestamp olduğunu düşünüyorum.
+        [ENH] çünkü 10 saniyede 1 mesaj yollaması gerekiyor.
+        [ENH] senior topic'indeki control pointleri kaldırıp, orada bazı stratejiler deneyebilirim.
+        [INVALID] kodlar düzgün çalışıyor ama counter daha büyük bir sayı veriyor.
+        [INVALID] ouputtaki offset sayısı: (distributor'daki sayı - 1) kadar.
+    3. consumer'a gelen kafka mesajlarını sadeleştirecek bir strateji bulunacak.
+
+
+ 
