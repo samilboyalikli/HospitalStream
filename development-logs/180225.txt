@@ -1,0 +1,16 @@
+TODO
+    1. distributor'un topiclere data yollayıp yollamadığını kontrol eden bir temporary controler eklenecek.
+        [SUCCESSFUL] temporary controler kodlamama gerek kalmadı, tek komutla geçmiş akış görülebiliyor:
+        [CMD] `docker exec -it kafka kafka-console-consumer --bootstrap-server kafka:9092 --topic children --from-beginning`
+    2. data transferi başarılıysa children topic'in analyzer'ına spark entegre edilecek.
+        [ENH] children topic'inde fazla data olmadığı için ilk etapta senior topic'inden başlamak daha makul gözüküyor.
+    3. data transferi başarılıysa children topic'in analyzer'ına spark entegre edilecek.
+        [BUG] Error response from daemon: driver failed programming external connectivity on endpoint senior (54a1a5d724d753db8435fe1b6c8384809579eebab816a049f1a8f77782e507ed): Bind for 0.0.0.0:7077 failed: port is already allocated
+        [ENH] kısayol "opt/spark-modules" direkt "opt" olarak değiştirilmeli.
+        [BUG] yanlışlıkla spark3.5.4'ü install ediyormuşum, onu spark3.2 olarak değiştiriyorum.
+        [SUCCESSFUL] gayet iyi çalıştı.
+        [BUG] python3: can't open file '/opt/main.py': [Errno 2] No such file or directory
+        [ENH] yanlışlıkla opt dizininde spark-submit yaptım. np.
+        [SUCCESSFUL] herşey mükemmel biçimde çalıştı :)
+        [ENH] aynı çözümü diğer topic'lere de entegre edebiliriz.
+        [ENH] şimdi analyzed_stream'e gelen mesajları analiz edip, sadece istenen datayı alacağımız şekilde consumer tasarlayabiliriz.
