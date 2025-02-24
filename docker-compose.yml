@@ -21,7 +21,15 @@
     depends_on:
       - zookeeper
 
-# we well add distributor service here.
+  distributor:
+    build:
+      context: ./distributor
+    command: /bin/sh -c "sleep 10 && python3 distributor.py"
+    container_name: distributor
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
 
   atlanta:
     build:
