@@ -1,0 +1,22 @@
+TODO
+    2. consumer'a gelen kafka mesajları analiz edilecek.
+        [INVALID] kodlar düzgün çalışıyor ama counter daha büyük bir sayı veriyor.
+        [INVALID] ouputtaki offset sayısı: (distributor'daki sayı - 1) kadar.
+        [ENH] hospitaller üzerinde groupBy uygulayıp count edecek bir analiz kodlayabiliriz.
+        [BUG] pyspark.errors.exceptions.captured.ParseException
+        [ENH] selectExpr düzeltilecek.
+        [SUCCESSFUL] gayet düzgün çalıştı.
+        [INVALID] 30 tane mesaj var. bu mesajların zamanlaması neye göre anlamalıyım.
+        [ENH] trigger time'ı kısmayı ve outputMode'u append yapmayı deneyeceğim.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: Append output mode not supported when there are streaming aggregations on streaming DataFrames/DataSets without watermark;
+        [ENH] bir watermark ekliyorum.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `event_time` cannot be resolved. Did you mean one of the following? [`Hospital`, `message_count`].;
+        [ENH] watermark'taki sorunları gideriyorum.
+        [INVALID] senior topic'e hiçbir data yazılmamış.
+        [ENH] watermark'ın süresini kısaltıp tekrar deniyorum.
+        [INVALID] hala herhangi bir veri gözükmüyor.
+    3. consumer'a gelen kafka mesajlarını sadeleştirecek bir strateji bulunacak.
+
+
+
+docker exec -it kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic analyzed_stream --from-beginning
