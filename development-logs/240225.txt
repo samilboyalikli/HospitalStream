@@ -1,0 +1,24 @@
+TODO
+    1. analyzed_stream'deki count edilen mesaj sayısı (offset-1)'e eşitlenecek.
+        [BUG] TypeError: trigger() got an unexpected keyword argument 'processingInterval' (topics/senior/main.py)
+        [BUG] ERROR Timed out waiting for connection to Zookeeper server [zookeeper:2181]. (io.confluent.admin.utils.ClusterStatus) (kafka service)
+        [ENH] kafka'daki error'u zookeeper'ın gecikmesine bağlıyorum. manuel olarak başlatıp tekrar deneyebilirim.
+        [ENH] main.py'daki `processingInterval`'i `processingTime` olarak değiştirip tekrar deneyebilirim.
+        [SUCCESSFUL] kafka başarıyla çalıştı.
+        [SUCCESSFUL] main.py başarıyla çalıştı.
+        [INVALID] analyzed_stream topic'inde hiçbir veri gözükmüyor.
+        [STATUS] son offset sayısı 83 olarak gözüküyor.
+        [SUCCESSFUL] distributor'daki senior data sayısı da 83 (offest-1).
+        [ENH] outputMode'u `update` olarak güncelledim. (eskisi: `append`)
+        [ENH] checkpointLocation'ı `/tmp/spark-checkpoints` olarak güncelledim. (eskisi: `/opt/spark-checkpoints/kafka_stream`)
+        [STATUS] zookeeper ilk başlattığımda geç kalmasına karşın ikincide geç kalmadı.
+        [SUCCESSFUL] herşey çalıştı.
+        [STATUS] son offset sayısı 163.
+        [STATUS] toplam data sayıları: 127.
+        [ENH] bir de complate mode'da deneyebiliriz. sonuçta en son sayıları görmek istiyoruz.
+        [ENH] kafka'ya ufak bir gecikme eklenebilir, ne olur ne olmaz diye. (zookeeper ilk açıldığında gecikme yapmıştı)
+        [ENH] `docker compose ps`'i canlı izleyebileceğimiz bir script yazılabilir.
+        [STATUS] offset 270.
+        [STATUS] toplam data sayıları: 294.
+        [STATUS] analyzed_stream'deki count sonucuyla offset sayısı çok yakın olmasına karşın eşit değil.
+docker exec -it kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic analyzed_stream --from-beginning
