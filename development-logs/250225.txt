@@ -1,0 +1,27 @@
+TODO
+    1. analyzed_stream'deki count edilen mesaj sayısı (offset-1)'e eşitlenecek.
+        [INVALID] analyzed_stream'deki count sonucuyla offset sayısı çok yakın olmasına karşın eşit değil.
+        [ENH] tekrar deniyorum.
+        [STATUS] offset = 115
+        [STATUS] counter = 247
+        [INVALID] counter 114 olması gerekirken (offset-1), 247.
+        [ENH] trigger `processTime`'ını düşürerek mesaj sayısını azaltmayı deneyebilirim.
+        [INVALID] mesaj sayısı azalmadı.
+        [STATUS] mesajlar eklektik gidiyor, o yüzden sadece son veriler göz önüne alınabilir.
+        [STATUS] offset = 86
+        [STATUS] counter = 368
+        [SUCCESSFUL] sadece son iki dakikalık iki timestamp toplandığında offset'le counter eşit \m/
+        [ENH] iki tane daha stream deneyim, gerçekten çalışıyor mu kontrol ediyorum.
+        [STATUS] counter = 107
+        [STATUS] offset = 108
+        [SUCCESSFUL] ikinci deneme de başarılı.
+        [STATUS] = counter = offset-1
+        [SUCCESSFUL] üçüncü deneme de başarılı.
+        [ENH] `processingTime`'la oynarsam ne değişiyor kontrol edebilirim.
+        [STATUS] `processingTime`'ı artırdıkça mesaj sayısı azalıyor, ama direkt orantısal değil.
+        [ENH] `startingOffsets`'le oynarsam ne değişiyor kontrol edebilirim. (`latest`)
+        [STATUS] `startingOffsets` değerini `latest` olarak ayarladığım zaman data sayısı eşit olmuyor.
+        [ENH] peki `processingTime`'ı tekrar 30 yapıp deneyelim. (`option("startingOffsets","latest")`)
+        [STATUS] offset = 90 V counter = 78 => INVALID
+        [ENH] `outputMode`'la oynarsam ne değişiyor kontrol edebilirim. (`append`, `update`, `complete`)
+        [ENH] parsed_df'i sadece isim, soyisim ve hastane olacak biçimde revize edip direk query'ye eklemeyi deneyebilirim.
