@@ -1,5 +1,5 @@
 TODO
-    2. consumer'a gelen kafka mesajları analiz edilecek.
+    1. consumer'a gelen kafka mesajları analiz edilecek.
         [INVALID] kodlar düzgün çalışıyor ama counter daha büyük bir sayı veriyor.
         [INVALID] ouputtaki offset sayısı: (distributor'daki sayı - 1) kadar.
         [ENH] hospitaller üzerinde groupBy uygulayıp count edecek bir analiz kodlayabiliriz.
@@ -15,8 +15,4 @@ TODO
         [INVALID] senior topic'e hiçbir data yazılmamış.
         [ENH] watermark'ın süresini kısaltıp tekrar deniyorum.
         [INVALID] hala herhangi bir veri gözükmüyor.
-    3. consumer'a gelen kafka mesajlarını sadeleştirecek bir strateji bulunacak.
-
-
-
-docker exec -it kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic analyzed_stream --from-beginning
+    2. consumer'a gelen kafka mesajlarını sadeleştirecek bir strateji bulunacak.
