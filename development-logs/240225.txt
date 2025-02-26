@@ -20,5 +20,4 @@ TODO
         [ENH] `docker compose ps`'i canlı izleyebileceğimiz bir script yazılabilir.
         [STATUS] offset 270.
         [STATUS] toplam data sayıları: 294.
-        [STATUS] analyzed_stream'deki count sonucuyla offset sayısı çok yakın olmasına karşın eşit değil.
-docker exec -it kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic analyzed_stream --from-beginning
+        [INVALID] analyzed_stream'deki count sonucuyla offset sayısı çok yakın olmasına karşın eşit değil.
