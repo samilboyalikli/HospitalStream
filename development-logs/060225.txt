@@ -1,0 +1,13 @@
+TODO
+1. childrentopic'e spark entegre edilecek.
+  [BUG] pyspark.errors.exceptions.base.PySparkRuntimeError: [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+  [ENH] children_analyzer'ın Dockerfile'ına JDK kurmaya çalışacağım.
+  [BUG] failed to solve: process "/bin/sh -c apt-get update && apt-get install -y openjdk-11-jdk" did not complete successfully: exit code: 100
+  [ENH] update ve install komutlarını ayrı `RUN` komutlarında kullanıyoruz.
+  [BUG] failed to solve: process "/bin/sh -c apt-get install -y openjdk-11-jdk" did not complete successfully: exit code: 100
+  [ENH] terminale bizzat girip çalışmayan komutları manuel girmeyi deniyoruz.
+  
+2. childrentopic'ten gelen datalar 5 dakika'da bir spark tarafından analiz edilecek.
+  2.1. çocukların hastanelere göre oranları tespit edilecek.
+  2.2. çocukların hastanelere göre yaş ortalaması tespit edilecek.
+  2.3. çocukların genel olarak yaş ortalaması tespit edilecek.
