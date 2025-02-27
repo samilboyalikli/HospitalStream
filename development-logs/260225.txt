@@ -1,0 +1,36 @@
+TODO
+    1. experimental konfigürasyonlar denenecek.
+        [ENH] `outputMode`'la oynarsam ne değişiyor kontrol edebilirim. (`append`, `update`, `complete`)
+        [STATUS] `.option("startingOffsets","earliest")` (topics/senior/main.py)
+        [STATUS] `.outputMode("complete")` (topics/senior/main.py)
+        [SUCCESSFUL] (counter=100)&&(offset-1=100) => SUCCESSFUL
+        [STATUS] `.outputMode("append")` (topics/senior/main.py)
+        [INVALID] (counter=10)&&(offest-1=104) => INVALID
+        [STATUS] `.outputMode("update")` (topics/senior/main.py)
+        [INVALID] (counter=11)&&(offset-1=88) => INVALID
+        [ENH] parsed_df'i sadece isim, soyisim ve hastane olacak biçimde revize edip direk query'ye eklemeyi deneyebilirim.      
+    2. analyzed_stream'den Name, Surname ve Hospital'den oluşan tam bir output elde edilecek.
+        [SUCCESSFUL] (counter=110)&&(offset-1=110) => SUCCESSFUL
+        [ENH] `query = parsed_df.select(...)` (topics/senior/main.py)
+        [BUG] Error while fetching metadata with correlation id 2 : {analyzed_stream=LEADER_NOT_AVAILABLE} (org.apache.kafka.clients.NetworkClient)
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: Complete output mode not supported when there are no streaming aggregations on streaming DataFrames/Datasets;
+        [ENH] `aggregated_df` bloğunu yorum satırına aldım.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: Complete output mode not supported when there are no streaming aggregations on streaming DataFrames/Datasets;
+        [ENH] `.outputMode("append")` (topics/senior/main.py)
+        [SUCCESSFUL] (dataCount=97)&&(offset-1=97) => SUCCESSFUL 
+        [ENH] artık tüm verilerden oluşan bir output denemeye geçilebilir.
+    3. analyzed_stream'den tüm verilerden oluşan bir output elde edilecek.
+        [ENH] `json_schema`'ya tüm verileri tanımlıyoruz.
+        [BUG] TypeError: __init__() missing 2 required positional arguments: 'keyType' and 'valueType'
+        [ENH] `StructField("blood values", MapType(StringType(), StringType()), True)` <-- olması gereken
+        [SUCCESSFUL] senior service başarıyla çalıştı.
+        [ENH] `blood values`'deki `MapType()` kısmında `structType[]` denenecek. (topics/senior/main.py)
+        [ENH] böylece `blood values`'deki tüm kan değerleri `FloatType` olacak.
+        [ENH] `StructField("blood values", StructField[MapType(StringType(),FloatType(), True)])` (topics/senior/main.py)
+        [BUG] `TypeError: 'type' object is not subscriptable`
+        [ENH] `{blood values}`'e yanlışlıkla `StructField()` atamışım, onun yerine `StructType()` atamam gerekiyordu.
+        [SUCCESSFUL] tüm verilerin içinde bulunduğu bir data streaming elde edildi.
+    4. topics/senior/main.py analyzed_stream'deki verileri analiz edilerek flagleyecek.
+        [ENH] hospitals/atlanta.py'da tüm `senior` bloklarına explanation eklenecek.
+        [STATUS] tüm explanation'lar eklendi.
+        [ENH] WBC için ideal aralıklar kodlanacak.
