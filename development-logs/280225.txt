@@ -1,0 +1,29 @@
+TODO
+    1. topics/senior/main.py analyzed_stream'deki verileri analiz edilerek flagleyecek.
+        [BUG] pyspark.errors.exceptions.base.PySparkTypeError: [NOT_COLUMN] Argument `col` should be a Column, got DataFrame.
+        [ENH] "blood values" stringi spark işlemlerinde güçlük çıkartıyor -> "bloodValues" 
+        [ENH] `when((cbc.WBC<4000)|(cbc.WBC>11000),...)`
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [CANNOT_RESOLVE_STAR_EXPAND] Cannot resolve `bloodValues`.* given input columns `data`. Please check that the specified table or struct exists and is accessible in the input columns.
+        [ENH] ilk etapta sadece bloodValues'u çekelim ve inceleyelim.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `bloodValues` cannot be resolved. Did you mean one of the following? [`blood values`, `Hospital`, `Name`, `Surname`, `Age`].
+        [ENH] StructField class'ında bir tane "blood values" unutmuşum :)
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `Time` cannot be resolved. Did you mean one of the following? [`bloodValues`].
+        [ENH] `time` sütununu eklemeyi unutmuşum.
+        [SUCCESSFUL] kodlar çalıştı. bloodValues sütununa başarıyla eriştim.
+        [ENH] `from_json()` fonksiyonuyla bloodValues keyinin valuesünü çekip, üzerine analiz yazabiliriz.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `value` cannot be resolved. Did you mean one of the following? [`bloodValues`].;
+        [ENH] value kullanılmasını sebebi sql sorgusunda öyle bir alias atanmasıydı, biz "bloodValues" kullanabiliriz.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [DATATYPE_MISMATCH.UNEXPECTED_INPUT_TYPE] Cannot resolve "from_json(bloodValues)" due to data type mismatch: Parameter 1 requires the "STRING" type, however "bloodValues" has the type "STRUCT<WBC: FLOAT, RBC: FLOAT, Hb: FLOAT, Hct: FLOAT, MCV: FLOAT, MCH: FLOAT, MCHC: FLOAT>".;
+        [BUG] `from_json()` fonksiyonu string öge bekliyor. oysa biz `bloodValues`ü yapılandırmıştık.
+        [ENH] direk `bloodValues`'ü select ediyoruz.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [CANNOT_RESOLVE_STAR_EXPAND] Cannot resolve `cbc`.* given input columns `data`. Please check that the specified table or struct exists and is accessible in the input columns.
+        [ENH] cbc bir alias'tan geliyordu. o alias'ı silmiştik o yüzden ilk önce `bloodValues`'ü select edeceğiz. sonra cbc df'ini kullanabiliriz.
+        [BUG]  Argument `col` should be a Column, got DataFrame.
+        [ENH] `cbc.withColumn("Time",time)` -> `cbc.withColumn("Time",time["Time"])`
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [MISSING_ATTRIBUTES.RESOLVED_ATTRIBUTE_MISSING_FROM_INPUT] Resolved attribute(s) "Time" missing from "WBC", "RBC", "Hb", "Hct", "MCV", "MCH", "MCHC", "analyzedWBC" in operator !Project [WBC#40, RBC#41, Hb#42, Hct#43, MCV#44, MCH#45, MCHC#46, analyzedWBC#54, Time#31 AS Time#63].
+        [ENH] `cbc = cbc.withColumn("Time",time["Time"])` -> `cbc = cbc.join(time)`
+        [SUCCESSFUL] kodlar başarıyla çalıştı.
+        [ENH] şimdi WBC analiz bloğuyla tüm verileri yazdırmak gerekiyor.
+        [ENH] bunun için sadece bloodValues'ü değil tüm sütunları select ettim.
+        [BUG] AttributeError: 'DataFrame' object has no attribute 'WBC'
+docker exec -it kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic analyzed_stream --from-beginning
