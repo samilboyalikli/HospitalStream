@@ -62,6 +62,18 @@
     depends_on:
       - kafka
 
+  senior:
+    container_name: senior
+    build: ./topics/senior
+    ports:
+      - "7079:7077"
+      - "8082:8080"
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_HOST=spark-master
+    volumes:
+      - ./spark-modules:/opt/spark-modules # It's a temporary volume for testing.
+
   dallas:
     build:
       context: ./hospitals
