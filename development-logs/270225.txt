@@ -1,0 +1,20 @@
+TODO
+    1. topics/senior/main.py analyzed_stream'deki verileri analiz edilerek flagleyecek.
+        [ENH] parsed_df sadeleştirilebilir. (topics/senior/main.py)
+        [STATUS] parsed_df sadeleştirildi.
+        [ENH] WBC için ideal aralıklar kodlanacak.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `data*` cannot be resolved. Did you mean one of the following? [`data`].;
+        [ENH] `.select("data*")` kısmı `.select("data.*")` şeklinde düzeltildi.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `data`.`blood values` cannot be resolved. Did you mean one of the following? [`blood values`, `Hospital`, `Gender`, `Name`, `Surname`].;
+        [ENH] eski kod bloğunu çalıştırmayı deniyorum. böylece tek sorunun select parantezinde olup olmadığını netleştireceğim.
+        [BUG] kafka gecikti :/
+        [ENH] docker-compose.yml'deki kafka servisine şu komutu ekledim: `command: /bin/sh -c "sleep 5; /etc/confluent/docker/run"`
+        [SUCCESSFUL] gecikme olmadan çalıştı.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `data`.`blood values` cannot be resolved. Did you mean one of the following? [`blood values`, `Hospital`, `Gender`, `Name`, `Surname`].;
+        [ENH] anladığım kadarıyla sorun parsed_df'de değil blood_values'de.
+        [ENH] `bloodValues = parsed_df.select("data.blood values")` -> `bloodValues = parsed_df.select("blood values")`
+        [BUG] AttributeError: 'DataFrame' object has no attribute 'WBC'
+        [ENH] `select("blood values.*")` && `when((col("WBC")<4000)or(col("WBC")>11000), "WBC(red)").otherwise("WBC(green)")` C (topics/senior/main.py)
+        [BUG] pyspark.errors.exceptions.base.PySparkValueError: [CANNOT_CONVERT_COLUMN_INTO_BOOL] Cannot convert column into bool: please use '&' for 'and', '|' for 'or', '~' for 'not' when building DataFrame boolean expressions.
+        [ENH] `when((col("WBC")<4000)or(col("WBC")>11000)...)` -> `when((col("WBC")<4000)|(col("WBC")>11000)...)`
+        [BUG] pyspark.errors.exceptions.base.PySparkTypeError: [NOT_COLUMN] Argument `col` should be a Column, got DataFrame.
