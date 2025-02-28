@@ -20,6 +20,7 @@
       retries: 5
     depends_on:
       - zookeeper
+    command: /bin/sh -c "sleep 5; /etc/confluent/docker/run"
 
   distributor:
     build:
