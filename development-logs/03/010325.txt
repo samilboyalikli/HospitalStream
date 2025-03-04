@@ -1,0 +1,35 @@
+TODO
+    1. topics/senior/main.py analyzed_stream'deki verileri analiz edilerek flagleyecek.
+        [BUG] AttributeError: 'DataFrame' object has no attribute 'WBC'
+        [ENH] `withColumn("analyzedWBC",when((parsed_df_.bloodValues.WBC<4000)|(parsed_df_.bloodValues.WBC>11000),"...")...)`
+        [SUCCESSFUL] kodlar problemsiz çalıştı.
+        [ENH] watermark eklenecek.
+        [STATUS] watermark eklendi: `cbc = cbc.withWatermark("Time", "1 minutes")`
+        [SUCCESSFUL] kodlar problemsiz çalıştı.
+        [ENH] `analyzedWBC` boolean haline getirilecek ve aralık dışı tüm dataların `false` olması sağlanacak.
+        [STATUS] `analyzedWBC` boolean yapıldı ve kod mantığı aralık dışı tüm dataların `false` olarak flagleneceği biçimde değiştirildi.
+        [SUCCESSFUL] kodlar problemsiz çalıştı.
+        [ENH] `analyzedWBC` -> `status(WBC)`
+        [STATUS] key değiştirildi.
+        [ENH] Integer olup yanlışlıkla `FloatType()` saydığımız kan değerleri tespit edilip düzeltilebilir.
+        [STATUS] `StructField` veri tipleri düzeltildi.
+        [ENH] kan değeri aralıkları yorum satırlarıyla kaydedilebilir.
+        [STATUS] kan değeri aralıkları yorum satırlarıyla kaydedildi.
+        [ENH] çözüm tüm unisex kan değerlerine adapte edilecek.
+        [INVALID] sadece son analiz edilmiş kan değeri gözüküyor.
+        [ENH] çünkü, yanlışlıkla her seferinde ilk dataframe'i kullanmışım.
+        [STATUS] düzeltildi.
+        [SUCCESSFUL] kodlar sorunsuz çalıştı.
+        [ENH] çözüm tüm kan değerlerine adapte edilecek.
+        [STATUS] cinsiyete bağlı kan değerleri modülize edildi.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [FIELD_NOT_FOUND] No such struct field `value_name` in `WBC`, `RBC`, `Hb`, `Hct`, `MCV`, `MCH`, `MCHC`.
+        [ENH] önce modülize etmeden çalıştıralım.
+        [SUCCESSFUL] kodlar başarıyla çalıştı.
+        [ENH] şimdi kod bloğunu modülize edebiliriz.
+        [ENH] önce gender-neutral kod blokları üzerinde deniyoruz.
+        [SUCCESSFUL] çalıştı.
+        [ENH] şimdi tüm kod blokları üzerinde deniyoruz.
+        [SUCCESSFUL] çalıştı.
+        [BUG] cinsiyete bağlı kan değerlerinin çıktısı hep false dönüyor.
+        [ENH] `when` ve `otherwise` fonksiyonlarını iç içe kullanmam mantıklı gözüküyor.
+        [INVALID] hala sorun çözülmüş değil.
