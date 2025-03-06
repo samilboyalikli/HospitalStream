@@ -1,0 +1,43 @@
+TODO
+    1. topics/senior/main.py analyzed_stream'deki verileri analiz edilerek flagleyecek.
+        [BUG] non-gender-neutral kod bloklarının işlevsiz olduğunu görüyorum.
+        [ENH] şimdi non-gender-neutral blokları inceliyorum.
+        [STATUS] inceledim ve tüm outputu son `otherwise`'ın etkileyip etkilemediğini test etmek istiyorum.
+        [BUG] pyspark.errors.exceptions.captured.AnalysisException: [DATATYPE_MISMATCH.DATA_DIFF_TYPES] Cannot resolve "CASE WHEN (((Gender = Female) AND (bloodValues.RBC >= 4100000)) AND (bloodValues.RBC <= 5100000)) THEN true ELSE lastOtherwise END" due to data type mismatch: Input to `casewhen` should all be the same type, but it's ["BOOLEAN", "STRING"].
+        [STATUS] tüm outputun son `otherwise`'dan kaynaklandığını anladım. 
+        [ENH] alternatif bir kod bloğu denedim.
+        [INVALID] başarısız. hiçbir şey değişmedi.
+        [ENH] unmodulise kod bloklarını deneyebilirim.
+        [INVALID] unmodulise kod blokları da çalışmadı. 
+        [ENH] problemi parçalamak faydalı gözüküyor. sadece tek bir unmodulise kod bloğu üzerine çalışayım.
+        [ENH] I will look only RBC values.
+        [INVALID] All outputs is `False`. I must focus the code block.
+        [ENH] `bloodValues.RBC` -> `bloodValues["RBC"]`
+        [INVALID] All outputs is `False`. I must focus the code block.
+        [ENH] I deleted analytics of code blocks, with this way I can understand program can read the gender or not.
+        [STATUS] Program cannot read gender.
+        [ENH] `cbc.Gender` -> `cbc["Gender"]`
+        [INVALID] Program cannot read gender.
+        [ENH] I added second `otherwise`.
+        [INVALID] Program cannot read gender.
+        [ENH] Incredible. Gender values is upper, and I'm writing normal ://
+        [SUCCESSFUL] The codes work perfectly.
+        [ENH] Now, I will try convert unmodulise code block to modulise version.
+        [SUCCESSFUL] The codes worked.
+        [INVALID] All `status(Hct)` value is `False`.
+        [ENH] Actually there is no value Hct in the bloodValues.
+        [SUCCESSFUL] Program worked perfectly.
+        [ENH] I must check `bloodValues`.
+        [INVALID] `"bloodValues":{"WBC":10089,"RBC":3668750,"Hb":14.6,"MCV":87,"MCH":25}`
+        [INVALID] There is just 5 blood values. But we coded 7 value in the producer.
+        [STATUS] Two value (Hct, MCHC) consist of percentiles. Because of that, value of them is not being float or integer.
+        [ENH] I can code unmodulise blocks for percentiles.
+        [ENH] I wrote a code block which convert percentile data to integer and doing analytical calculations.
+        [INVALID] Code block didnt work unfortunately.
+        [ENH] I'm trying to convert percentile data to integer type  in un-gender-value code block.
+        [ENH] I didnt convert IntegerType to StringType in the StructField of percentile datas.
+        [STATUS] I converted.
+        [SUCCESSFUL] The codes worked perfectly.
+        [ENH] I will try to convert percentile to integer in the gender-value block.
+        [INVALID] Code block didnt work.
+        [ENH] I forgot to change data type of Hct :/ 
