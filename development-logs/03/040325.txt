@@ -1,0 +1,17 @@
+TODO
+    1. topics/senior/main.py analyzed_stream'deki verileri analiz edilerek flagleyecek.
+        [ENH] I'm trying to start program.
+        [SUCCESSFUL] The program worked perfectly.
+    2. topics/adult/main.py will analyze and flag all streaming datas.
+        [ENH] I will write ideal values to all senior functions in the atlanta producer as a comment line.
+        [STATUS] I wrote comment lines to all functions in main.
+        [ENH] Should be copied all codes of senior/main.py to adult/main.py.
+        [STATUS] I copied all codes to other main.py.
+        [ENH] Should be adoptate adult values to adult/main.py.
+        [STATUS] I adoptate all code blood values in the main file.
+        [ENH] should be tested.
+        [SUCCESSFUL] The program worked perfectly.
+        [ENH] I must write command lines to children functions in atlanta producer.
+        [STATUS] I wrote.
+        [ENH] Should be adoptate main topic codes to children/main.py.
+docker exec -it kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic analyzed_stream --from-beginning
