@@ -14,4 +14,3 @@ TODO
         [ENH] I must write command lines to children functions in atlanta producer.
         [STATUS] I wrote.
         [ENH] Should be adoptate main topic codes to children/main.py.
-docker exec -it kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic analyzed_stream --from-beginning
