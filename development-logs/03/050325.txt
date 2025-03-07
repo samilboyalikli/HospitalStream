@@ -1,0 +1,7 @@
+TODO
+[ENH] I coded a script which include functions can producing colored output.
+    1. topics/adult/main.py will analyze and flag all streaming datas.
+        [ENH] Should be adoptate main topic codes to children/main.py.
+        [ENH] I'm starting to code with unmodulise style.
+        [STATUS] I coded, now I'm testing.
+        [BUG] pyspark.errors.exceptions.captured.StreamingQueryException: [STREAM_FAILED] Query [id = 7c037082-800d-4885-be47-1104ef05ac64, runId = 20611972-6023-4002-98ab-9d8e0fc5b275] terminated with exception: org.apache.kafka.common.errors.UnknownTopicOrPartitionException: This server does not host this topic-partition.
