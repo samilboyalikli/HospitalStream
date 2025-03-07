@@ -1,0 +1,10 @@
+TODO
+    1. topics/adult/main.py will analyze and flag all streaming datas.
+        [ENH] Still exist some codes. I'll test it.
+        [SUCCESSFUL] Program worked perfectly.
+        [ENH] I can add a func which can count all boolean values.
+        [INVALID] It's takes time so much, I'm passing.
+    2. topics/children/main.py will analyze and flag all streaming datas.
+        [ENH] 
+
+docker exec -it kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic analyzed_stream --from-beginning
