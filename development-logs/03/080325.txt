@@ -1,0 +1,40 @@
+TODO
+    1. Should be add colorising blocks to consumer file for visualisation.
+        [ENH] firstly, I will try to see just names of patients.
+        [SUCCESSFUL] I can see all names.
+        [ENH] now program, should be print just names and blood values.
+        [BUG] TypeError: can only concatenate str (not "int") to str
+        [ENH] I deleted all commas.
+        [SUCCESSFUL] The codes worked perfectly.
+        [ENH] should be colorise all blood values.
+        [SUCCESSFUL] the codes worked.
+        [INVALID] keys ok but values returned none.
+        [ENH] `print(green(i))` -> `for i in blood_values: print(green(i), red(blood_values[i]))`
+        [INVALID] I cant take any error and any output from consumer :/
+        [ENH] I revised as a more pythonic.
+        [INVALID] topics is working so slowly as I understand.
+        [ENH] maybe because of network speed.
+        [STATUS] network speed is ok.
+        [ENH] maybe repo is busy.
+        [STATUS] I send some pings. repo is not busy.
+        [ENH] ok, all topics are installing same time... of course will be delay :)
+        [ENH] I added a if block.
+        [BUG] KeyError: 'Name'
+        [ENH] `if data["Name"] in data:` -> `if "Name" in data:`
+        [SUCCESSFUL] the codes worked perfectly.
+        [ENH] I added codes for values.
+        [INVALID] there is a lot of none outputs :/
+        [ENH] should be use normal dict codes.
+        [ENH] I wrote a simple analysis on WBC.
+        [SUCCESSFUL] Everthings look ok.
+        [ENH] I deleted print from colorising funcs.
+        [BUG] kafka.errors.NoBrokersAvailable: NoBrokersAvailable
+        [ENH] I didnt remove old services before of building.
+        [SUCCESSFUL] Worked perfectly.
+        [ENH] should be added one more value afterward we can modulise it.
+        [SUCCESSFUL] Worked perfectly.
+        [ENH] I can add other values.
+        [SUCCESSFUL] worked perfectly.
+        [ENH] I must colorise value names too.
+        [SUCCESSFUL] the codes worked perfectly.
+docker exec -it kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic analyzed_stream --from-beginning
