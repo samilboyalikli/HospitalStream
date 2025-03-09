@@ -1,0 +1,14 @@
+TODO
+    1. Should be add colorising blocks to consumer file for visualisation.  
+        [ENH] firstly I want to see all analyzed datas on consumer.
+        [STATUS] Codes is ok, just I renamed consumer.py as main.py.
+        [BUG] raise Errors.NoBrokersAvailable()
+        [ENH] Should be added a sleep command to consumer service.
+        [STATUS] `ENTRYPOINT ["sh", "-c", "sleep 10 && python3 main.py"]`
+        [ENH] There is a buffer in the consumer.
+        [ENH] I can add a flush block. 
+        [STATUS] I added a block.
+        [SUCCESSFUL] consumer worked perfectly.
+        [ENH] I can del try blocks and add visualisator for whc.
+        [STATUS] Deleted try blocks.
+        [ENH] firstly, I will try to see just names of patients.
