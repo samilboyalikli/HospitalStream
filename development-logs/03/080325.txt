@@ -37,4 +37,3 @@ TODO
         [SUCCESSFUL] worked perfectly.
         [ENH] I must colorise value names too.
         [SUCCESSFUL] the codes worked perfectly.
-docker exec -it kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic analyzed_stream --from-beginning
