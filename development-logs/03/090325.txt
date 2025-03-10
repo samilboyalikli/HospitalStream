@@ -1,0 +1,10 @@
+TODO
+    1. Outputs must be separated.
+        [ENH] I added a func for this function.
+        [SUCCESSFUL] The codes worked perfectly.
+        [ENH] now I'm writing seperater space to printing funcion.
+        [SUCCESSFUL] outputs separated perfectly.
+        [ENH] we can revise it more aesthetically.
+        [SUCCESSFUL] the codes worked. 
+        [ENH] I deleted some flush funcs.
+        [SUCCESSFUL] the worked perfectly.
