@@ -1,9 +1,15 @@
+# TODO
+# Some blood values of age ranges is same, we can join thats.
+
 from kafka import KafkaProducer
 import random
 import pandas
 import time
 import json
 import sys
+
+# progress time indicates the running time of the producer.
+progress_time = 600
 
 
 def select_random_from_csv(file_path, row_count):
@@ -25,6 +31,11 @@ def age():
 
 
 def wbc_for_children(age):
+    """
+    Ideal Values for 0-2 Age Range: 6000-17500
+    Ideal Values for 2-12 Age Range: 5000-15000
+    Ideal Values for 12-18 Age Range: 4500-13500
+    """
     if age >= 0 and age <= 2:
         return random.randint(4000,19000)
     elif age >= 2 and age <= 12:
@@ -34,6 +45,11 @@ def wbc_for_children(age):
 
 
 def rbc_for_children(age):
+    """
+    Ideal Values for 0-2 Age Range: 3900000-5500000
+    Ideal Values for 2-12 Age Range: 4000000-5200000
+    Ideal Values for 12-18 Age Range: 4100000-5600000
+    """
     if age >= 0 and age <= 2:
         return random.randint(3500000,6500000)
     elif age >= 2 and age <= 12:
@@ -43,6 +59,12 @@ def rbc_for_children(age):
 
 
 def hb_for_children(age,gender):
+    """
+    Ideal Values for 0-2 Age Range: 10.0-14.0
+    Ideal Values for 2-12 Age Range: 11.5-15.5
+    Ideal Values for 12-18 Age Boys: 13.0-16.0
+    Ideal Values for 12-18 Age Girls: 12.0-15.0
+    """
     if age >= 0 and age <= 2:
         return round(random.uniform(9.0,15.0),1)
     elif age >= 2 and age <= 12:
@@ -55,6 +77,12 @@ def hb_for_children(age,gender):
 
 
 def hm_for_children(age,gender):
+    """
+    Ideal Values for 0-2 Age Range: 33-43
+    Ideal Values for 2-12 Age Range: 34-42
+    Ideal Values for 12-18 Age Boys: 40-50
+    Ideal Values for 12-18 Age Girls: 36-45
+    """
     if age >= 0 and age <= 2:
         return random.randint(30,45)
     elif age >= 2 and age <= 12:
@@ -67,6 +95,9 @@ def hm_for_children(age,gender):
 
 
 def platelet_for_children(age):
+    """
+    Ideal Values for All Age Range: 150000-450000
+    """
     if age >= 0 and age <= 2:
         return random.randint(125000,475000)
     elif age >= 2 and age <= 12:
@@ -76,6 +107,11 @@ def platelet_for_children(age):
 
 
 def mcv_for_children(age):
+    """
+    Ideal Values for 0-2 Age Range: 70-86
+    Ideal Values for 2-12 Age Range: 75-87
+    Ideal Values for 12-18 Age Range: 80-96
+    """
     if age >= 0 and age <= 2:
         return random.randint(65,90)
     elif age >= 2 and age <= 12:
@@ -85,6 +121,11 @@ def mcv_for_children(age):
 
 
 def mch_for_children(age):
+    """
+    Ideal Values for 0-2 Age Range: 24-30
+    Ideal Values for 2-12 Age Range: 26-32
+    Ideal Values for 12-18 Age Range: 28-34
+    """
     if age >= 0 and age <= 2:
         return random.randint(20,35)
     elif age >= 2 and age <= 12:
@@ -94,6 +135,10 @@ def mch_for_children(age):
 
 
 def mchc_for_children(age):
+    """
+    Ideal Values for 0-2 Age Range: 30-36
+    Ideal Values for 2-18 Age Range: 32-36
+    """
     if age >= 0 and age <= 2:
         return random.randint(25,40)
     elif age >= 2 and age <= 12:
@@ -103,70 +148,118 @@ def mchc_for_children(age):
 
 
 def wbc_for_adult():
+    """
+    Ideal Values: 4000-11000
+    """
     return random.randint(3000,12000)
 
 
 def rbc_for_adult(gender):
+    """
+    Ideal Values for Male: 4700000-6100000
+    Ideal Values for Female: 4200000-5400000
+    """
     if gender == "MALE":
         return random.randint(4500000,6500000)
     else: return random.randint(3700000,5700000)
 
 
 def hb_for_adult(gender):
+    """
+    Ideal Values for Male: 13.5-17.5
+    Ideal Values for Female: 12.0-15.5
+    """
     if gender == "MALE":
         return round(random.uniform(12.0,19.0),1)
     else: return round(random.uniform(10.0,17.0),1)
 
 
 def hm_for_adult(gender):
+    """
+    Ideal Values for Male: 41-50
+    Ideal Values for Female: 36-44
+    """
     if gender == "MALE":
         return random.randint(35,55)
     else: return random.randint(30,50)
 
 
 def mcv_for_adult():
+    """
+    Ideal Values: 80-100
+    """
     return random.randint(70,120)
 
 
 def mch_for_adult():
+    """
+    Ideal Values: 27-33
+    """
     return random.randint(20,40)
 
 
 def mchc_for_adult():
+    """
+    Ideal Values: 32-36
+    """
     return random.randint(25,40)
 
 
 def wbc_for_senior():
+    """
+    Ideal Values: 4000-11000
+    """
     return random.randint(3000,12000)
 
 
 def rbc_for_senior(gender):
+    """
+    Ideal Values for Male: 4500000-5900000
+    Ideal Values for Female: 4100000-5100000
+    """
     if gender == "MALE":
         return random.randint(4000000,7000000)
     else: return random.randint(3500000,6000000)
 
 
 def hb_for_senior(gender):
+    """
+    Ideal Values for Male: 13.0-17.0
+    Ideal Values for Female: 12.0-15.0
+    """
     if gender == "MALE":
         return round(random.uniform(11.0,19.0),1)
     else: return round(random.uniform(10.0,17.0),1)
 
 
 def hm_for_senior(gender):
+    """
+    Ideal Values for Male: 39-50
+    Ideal Values for Female: 36-46
+    """
     if gender == "MALE":
         return random.randint(30,60)
     else: return random.randint(25,55)
 
 
 def mcv_for_senior():
+    """
+    Ideal Values: 80-100
+    """
     return random.randint(70,110)
 
 
 def mch_for_senior():
+    """
+    Ideal Values: 27-33 
+    """
     return random.randint(20,40)
 
 
 def mchc_for_senior():
+    """
+    Ideal Values: 32-36
+    """
     return random.randint(25,45)
 
 
@@ -237,7 +330,7 @@ def case_production():
         "Surname":select_random_from_csv('last_name.csv', 380410).iloc[0, 0].upper(),  
         "Age":age_of_patience,
         "cbc":age_range,
-        "blood values":blood_values_of_patience,
+        "bloodValues":blood_values_of_patience,
         "Hospital":"ATLANTA HOSPITAL",
         "Gender":gender_of_patience,
         "Time":readable_time(timestamp=time.time())
@@ -250,12 +343,12 @@ message_count = 0
 
 try:
     print("Producer started...")
-    while time.time() - start_time < 120:
+    while time.time() - start_time < progress_time:
         case = case_production()
         turn = random.randint(0, 2)
         if turn == 1:
             time.sleep(5)
-        producer.send("hospital_kafka", case)
+        producer.send("raw_stream", case)
         print(f"Sent: {case}")
         message_count = message_count + 1
         time.sleep(0.5)
@@ -263,8 +356,8 @@ except Exception as e:
     print(f"An error occured:\n{e}")
 finally:
     sys.stdout.flush()
-    producer.send("hospital_kafka", f"Send {message_count} messages from Atlanta Hospital.")
-    producer.send("hospital_kafka", "info - Atlanta stream finished.")
-    producer.send("hospital_kafka", "info - a producer finished.")
+    producer.send("raw_stream", f"Send {message_count} messages from Atlanta Hospital.")
+    producer.send("raw_stream", "info - Atlanta stream finished.")
+    producer.send("raw_stream", "info - a producer finished.")
     producer.close()
     print("Producer finished.")
