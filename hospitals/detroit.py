@@ -5,6 +5,9 @@ import time
 import json
 import sys
 
+# progress time indicates the running time of the producer.
+progress_time = 600
+
 
 def select_random_from_csv(file_path, row_count):
     row = random.randint(0, row_count)
@@ -237,7 +240,7 @@ def case_production():
         "Surname":select_random_from_csv('last_name.csv', 380410).iloc[0, 0].upper(),  
         "Age":age_of_patience,
         "cbc":age_range,
-        "blood values":blood_values_of_patience,
+        "bloodValues":blood_values_of_patience,
         "Hospital":"DETROIT HOSPITAL",
         "Gender":gender_of_patience,
         "Time":readable_time(timestamp=time.time())
@@ -250,12 +253,12 @@ message_count = 0
 
 try:
     print("Producer started...")
-    while time.time() - start_time < 120:
+    while time.time() - start_time < progress_time:
         case = case_production()
         turn = random.randint(0, 2)
         if turn == 1:
             time.sleep(5)
-        producer.send("hospital_kafka", case)
+        producer.send("raw_stream", case)
         print(f"Sent: {case}")
         message_count = message_count + 1
         time.sleep(0.5)
@@ -263,8 +266,8 @@ except Exception as e:
     print(f"An error occured:\n{e}")
 finally:
     sys.stdout.flush()
-    producer.send("hospital_kafka", f"Send {message_count} messages from Detroit Hospital.")
-    producer.send("hospital_kafka", "info - Detroit stream finished.")
-    producer.send("hospital_kafka", "info - a producer finished.")
+    producer.send("raw_stream", f"Send {message_count} messages from Detroit Hospital.")
+    producer.send("raw_stream", "info - Detroit stream finished.")
+    producer.send("raw_stream", "info - a producer finished.")
     producer.close()
     print("Producer finished.")
