@@ -115,7 +115,7 @@ services:
   dallas:
     build:
       context: ./hospitals
-    command: /bin/sh -c "sleep 10 && python3 dallas.py
+    command: /bin/sh -c "sleep 10 && python3 dallas.py"
     container_name: dallas
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -125,7 +125,7 @@ services:
   detroit:
     build:
       context: ./hospitals
-    command: /bin/sh -c "sleep 10 && python3 detroit.py
+    command: /bin/sh -c "sleep 10 && python3 detroit.py"
     container_name: detroit
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -135,7 +135,7 @@ services:
   houston:
     build:
       context: ./hospitals
-    command: /bin/sh -c "sleep 10 && python3 houston.py
+    command: /bin/sh -c "sleep 10 && python3 houston.py"
     container_name: houston
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -145,7 +145,7 @@ services:
   jersey:
     build:
       context: ./hospitals
-    command: /bin/sh -c "sleep 10 && python3 jersey.py
+    command: /bin/sh -c "sleep 10 && python3 jersey.py"
     container_name: jersey
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -155,7 +155,7 @@ services:
   miami:
     build:
       context: ./hospitals
-    command: /bin/sh -c "sleep 10 && python3 miami.py
+    command: /bin/sh -c "sleep 10 && python3 miami.py"
     container_name: miami
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -165,7 +165,7 @@ services:
   newyork:
     build:
       context: ./hospitals
-    command: /bin/sh -c "sleep 10 && python3 newyork.py
+    command: /bin/sh -c "sleep 10 && python3 newyork.py"
     container_name: newyork
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -175,7 +175,7 @@ services:
   phoenix:
     build:
       context: ./hospitals
-    command: /bin/sh -c "sleep 10 && python3 phoenix.py
+    command: /bin/sh -c "sleep 10 && python3 phoenix.py"
     container_name: phoenix
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -185,7 +185,7 @@ services:
   sanfrancisco:
     build:
       context: ./hospitals
-    command: /bin/sh -c "sleep 10 && python3 sanfrancisco.py
+    command: /bin/sh -c "sleep 10 && python3 sanfrancisco.py"
     container_name: sanfrancisco
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -195,7 +195,7 @@ services:
   seattle:
     build:
       context: ./hospitals
-    command: /bin/sh -c "sleep 10 && python3 seattle.py
+    command: /bin/sh -c "sleep 10 && python3 seattle.py"
     container_name: seattle
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -205,7 +205,7 @@ services:
   washington:
     build:
       context: ./hospitals
-    command: /bin/sh -c "sleep 10 && python3 washington.py
+    command: /bin/sh -c "sleep 10 && python3 washington.py"
     container_name: washington
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
