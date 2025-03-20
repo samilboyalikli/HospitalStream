@@ -110,3 +110,65 @@ Projede sadece 5 Apache Kafka topic'i bulunuyor.
 - Senior topic'i ise Raw Stream topic'inde bulunan 65 yaşının üstündeki kayıtları barındırıyor.
 - Analyzed Stream topic'i Raw Stream topic'indeki verilerin analiz edilmiş sonuçlarını barındırıyor.
 
+## Sahte Verilerin Anatomisi
+
+Her bir veri, hastanede kan testi yaptıran hasta kaydını temsil eder. Her biri dictionary ögesidir. En başta 8 key'den ve 8 value'den oluşurken sonradan bu sayı flagler ile birlikte artış göstermektedir. Aşağıda Raw Stream verilerinin açıklaması, bloodValues ögesindeki key-value çiftlerinin anlamları ve Analyzed Stream verilerinin açıklamaları yer almaktadır.
+
+#### Raw Stream:
+```Py
+"Name":"hasta_adi",
+"Surname":"hasta_soyadi",
+"Age":hasta_yasi,
+"cbc":"hasta_yas_araligi",
+"bloodValues":{hasta_kan_degerleri},
+"Hospital":"test_yapilan_hastane",
+"Gender":"hasta_cinsiyeti",
+"Time":verinin_sisteme_giris_zamani
+```
+
+- Name, hastanın adıdır (string).  
+- Surname hastanın soyadıdır (string).  
+- Age hastanın yaşıdır (integer).  
+- cbc hastanın yaş aralığıdır (string) -Dipnot: Bu kısım geliştirme esnasındaki bazı kolaylıklardan dolayı konulmuştur, kaldırılacaktır.- (string).  
+- bloodValues hastanın kan değerlerini içeren bir başka dictionary ögesidir -Bu kısım aşağıda ayrıntılı açıklanacaktır.- (dictionary).  
+- Hospital hastanın kan testini yaptırdığı hastanenin adıdır (string).  
+- Gender hastanın cinsiyetidir (string).  
+- Time hastanın kan testinin sisteme yüklendiği zamandır -Bir başka deyişle, producer'ın sahte veriyi ürettiği zamandır.- (timestamp). 
+
+#### `bloodValues` Çiftlerinin Anlamları:
+```Py
+"WBC":beyaz_kan_hucreleri-lokositler,
+"RBC":kirmizi_kan_hucreleri-eritrositler,
+"Hb":hemoglobin,
+"Hct":"hematokrit%",
+"MCV":ortalama_eritrosit_hacmi,
+"MCH":ortalama_hemoglobin_miktari,
+"MCHC":"ortalama_hemoglobin_konsantrasyonu%"
+```
+
+- WBC (White Blood Cell, Beyaz Kan Hücreleri - Lökositler), bağışıklık sisteminin bir parçasıdır. Vücuda giren enfeksiyonlarla savaşır. Düşükse bağışıklık zayıflamış olabilir, yüksekse enfeksiyon veya iltihap belirtisi olabilir.
+- RBC (Red Blood Cell, Kırmızı Kan Hücreleri - Eritrositler), oksijen taşıyan hücrelerdir. Düşüklüğü anemiye, fazlalığı bazı kan hastalıklarına işaret edebilir.
+- Hb (Hemoglobin), kırmızı kan hücrelerinde bulunan, oksijen taşıyan proteindir. Düşük olması kansızlığı (anemi) gösterebilir.
+- Hct (Hematocrit), Kanın ne kadarının kırmızı kan hücrelerinden oluştuğunu gösterir. Düşükse anemi, yüksekse sıvı kaybı veya bazı hastalıklar düşünülebilir.
+- MCV (Mean Corpuscular Volume, Ortalama Eritrosit Hacmi), kırmızı kan hücrelerinin büyüklüğünü gösterir. Küçükse demir eksikliği, büyükse B12 veya folik asit eksikliği olabilir.
+- MCH (Mean Corpuscular Hemoglobin, Ortalama Hemoglobin Miktarı), her kırmızı kan hücresinde ne kadar hemoglobin bulunduğunu gösterir. Düşüklük demir eksikliğini, yükseklik B12 eksikliğini gösterebilir.
+- MCHC (Mean Corpuscular Hemoglobin Concentration, Ortalama Hemoglobin Konsantrasyonu), kırmızı kan hücrelerindeki hemoglobin yoğunluğunu gösterir. Düşüklüğü anemiye, yüksekliği bazı nadir kan hastalıklarına işaret edebilir.
+
+#### Analyzed Stream:
+
+```Py
+"Name":"hasta_adi",
+"Surname":"hasta_soyadi",
+"Age":hasta_yasi,
+"bloodValues":{hasta_kan_degerleri},
+"Hospital":"test_yapilan_hastane",
+"Gender":"hasta_cinsiyeti",
+"Time":verinin_sisteme_giris_zamani,
+"status(WBC)":wbc_analiz_sonucu,
+"status(RBC)":rbc_analiz_sonucu,
+"status(Hb)":hb_analiz_sonucu,
+"status(Hct)":hct_analiz_sonucu,
+"status(MCV)":mcv_analiz_sonucu,
+"status(MCH)":mch_analiz_sonucu,
+"status(MCHC)":mchc_analiz_sonucu
+```
