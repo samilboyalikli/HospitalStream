@@ -4,11 +4,17 @@ RUN apk add --no-cache bash python3 py3-pip
 
 COPY . .
 
-# RUN wget -P /opt https://dlcdn.apache.org/spark/spark-3.5.4/spark-3.5.4-bin-hadoop3.tgz
+# non-volume installer commands:
+    # BUG | "=> ERROR [senior 4/8] RUN wget"
+    #RUN wget -P /opt https://dlcdn.apache.org/spark/spark-3.5.4/spark-3.5.4-bin-hadoop3.tgz
 
-# RUN tar -xvzf /opt/spark-3.5.4-bin-hadoop3.tgz -C /opt/
+RUN wget -P /opt https://archive.apache.org/dist/spark/spark-3.5.4/spark-3.5.4-bin-hadoop3.tgz
+RUN tar -xvzf /opt/spark-3.5.4-bin-hadoop3.tgz -C /opt/
 
-RUN ln -s /opt/spark-modules/spark-3.5.4-bin-hadoop3 /opt/spark
+# this command was for volume version:
+    #RUN ln -s /opt/spark-modules/spark-3.5.4-bin-hadoop3 /opt/spark
+
+RUN ln -s /opt/spark-3.5.4-bin-hadoop3 /opt/spark
 
 RUN pip3 install kafka-python
 
