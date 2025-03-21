@@ -172,3 +172,17 @@ Her bir veri, hastanede kan testi yaptıran hasta kaydını temsil eder. Her bir
 "status(MCH)":mch_analiz_sonucu,
 "status(MCHC)":mchc_analiz_sonucu
 ```
+
+- `Status(WBC)`, WBC analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan 6000-17500 arasıdır. 2-12 yaş çocuklar için 5000-15000 arası ve 12-18 yaş çocuklar için ideal aralık 4500-13500 arasıdır. **TODO:ADULT&SENIOR** İdeal aralıklarda olan WBC için Status(WBC) flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
+
+- `Status(RBC)`, RBC analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan 3900000-5500000 arasıdır. 2-12 yaş çocuklar için 4000000-5200000 arası ve 12-18 yaş çocuklar için ideal aralık 4100000-5600000 arasıdır. **TODO:ADULT&SENIOR** İdeal aralıklarda olan RBC için Status(RBC) flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
+
+- `Status(Hb)`, Hb analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan 10.0-14.0 arasıdır. 2-12 yaş çocuklar için 11.5-15.5 arası ve 12-18 yaş çocuklar için ideal aralık kız ve erkek çocuklar için değişmektedir. Kız çocuklar için ideal aralık 12.0-15.0 iken, erkek çocuklarda bu aralık 13.0-16.0'dır. **TODO:ADULT&SENIOR** İdeal aralıklarda olan Hb için Status(Hb) flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
+
+- `Status(Hm)`, Hm analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan %33-%43 arasıdır. 2-12 yaş çocuklar için %34-%42 arası ve 12-18 yaş çocuklar için ideal aralık kız ve erkek çocuklar için değişmektedir. Kız çocuklar için ideal aralık %36-%45 iken, erkek çocuklarda bu aralık %40-%50'dır. **TODO:ADULT&SENIOR** İdeal aralıklarda olan Hm için Status(Hm) flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
+
+- `Status(MCV)`, MCV analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan 70-86 arasıdır. 2-12 yaş çocuklar için 75-87 arası ve 12-18 yaş çocuklar için ideal aralık 80-96 arasıdır. **TODO:ADULT&SENIOR** İdeal aralıklarda olan MCV için Status(MCV) flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
+
+- `Status(MCH)`, MCH analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan 24-30 arasıdır. 2-12 yaş çocuklar için 26-32 arası ve 12-18 yaş çocuklar için ideal aralık 28-34 arasıdır. **TODO:ADULT&SENIOR** İdeal aralıklarda olan MCH için Status(MCH) flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
+
+- `Status(MCHC)`, MCHC analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal oran %30-%36 arasıdır. 2-18 yaş çocuklar için ise ideal oran %32-%36'dır. **TODO:ADULT&SENIOR** İdeal aralıklarda olan MCHC için Status(MCHC) flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
