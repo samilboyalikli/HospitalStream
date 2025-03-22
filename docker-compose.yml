@@ -71,8 +71,6 @@ services:
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_HOST=spark-master
-    #volumes:
-    #  - ./spark-modules:/opt/spark-modules
     depends_on:
       - kafka
 
@@ -85,8 +83,6 @@ services:
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_HOST=spark-master
-    #volumes:
-    #  - ./spark-modules:/opt/spark-modules
     depends_on:
       - kafka
 
@@ -99,8 +95,6 @@ services:
     environment:
       - SPARK_MODE=master
       - SPARK_MASTER_HOST=spark-master
-    #volumes:
-    #  - ./spark-modules:/opt/spark-modules
     depends_on:
       - kafka
 
