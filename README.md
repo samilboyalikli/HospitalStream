@@ -16,7 +16,7 @@ Eğer;
 
 bu simülasyon işinizi görecektir.
 ## Simülasyonun Şeması
-![Main Schema of Project.](/assets/main_schema.jpeg "TMain Schema of Project.")
+![Main Schema of Project.](/assets/main_schema.jpeg "Main Schema of Project.")
 
 ### Producer
 
@@ -88,6 +88,8 @@ Flaglenen veriler Apache Kafka kullanılarak analyzed_stream adında bir topic'e
 
 
 ### Consumer
+
+![Output of Consumer.](/assets/consumer_output.png "Output of Consumer.")
 
 Adından da anlaşılacağı üzere consumer dizininde kodladığım, analiz edilmiş verileri görmemizi ve basit bir terminal görselleştirmesi sunmamızı sağlayan kısım. Burada flaglenmiş veriler, topics tarafından kendilerine yapıştırılan flaglere göre renklendirilir ve konsola yazılır. Böylece kullanıcı verileri analiz edilmiş bir biçimde görme fırsatı elde eder.
 
