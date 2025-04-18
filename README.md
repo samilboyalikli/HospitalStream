@@ -1,190 +1,190 @@
-# HOSPITAL SIMULATION
-13 Hastanenin Canlı Veri Akışının Basit Bir Simülasyonu.
-## Genel Bakış
-Proje, hastanelerin canlı veri akışının küçük bir kısmını simüle eder. Orkestrasyon için docker-compose kullanan sistem, sahte verileri üretirken Apache Spark'ın batch yapısını kullanır. Ürettiği verilerden Apache Kafka vasıtasıyla bir veri akışı oluşturur ve bunları iki katmanda analiz eder. İlk katmanda Apache Kafka'yı kullanırken ikinci katmanda Apache Spark'ın Structured Streaming yapısını kullanır.
-## Projenin Amacı
-Apache Spark üzerinde çalışırken canlı veri çekebileceğim ve internet stabilitesi, siber güvenlik, öngörülebilir karmaşıklık gibi parametreleri düşündürmeyecek veri akışları bulmakta oldukça zorlandım. Bunun sonucunda kendim Apache Spark'ın batch modüllerini kullanarak fake veriler üretmeye başladım. Bunları da bir veri akışı oluşturacak  biçimde programlayıp üzerine Apache Spark'ın Structured Streaming modülüyle bazı analizler yazdım.
+# HOSPITAL SIMULATION  
+A Simple Simulation of Live Data Streaming for 13 Hospitals  
 
-Projenin amacı, en düşük risk ve karmaşıklıkla canlı veri akışı simüle etmektir. İkincil olarak, bu veriler üzerinde en basitten başlayıp en karmaşığa doğru çeşitli canlı analizler oluşturarak, Apache Kafka'yı ve Apache Spark'ı anlamaktır. Tüm bu işlemleri de Docker ile orkestre ederek docker-compose üzerinde derin bir kavrayış kazanmaktır.
-## Alternatif Kullanımlar
-Eğer;
-1. Gerçek Zamanlı bir veri akışı oluşturmak istiyorsanız.
-2. Gerçek Zamanlı bir veri akışı üzerinde analiz denemek istiyorsanız.
-3. Docker-compose'un çalışma biçimini anlamak istiyorsanız.
-4. Apache Spark'la sahte veri üretmek istiyorsanız.
-5. Apache Kafka ile canlı bir veri akışı üzerinde analizler yazmak istiyorsanız.
+## Overview  
+This project simulates a small portion of hospitals’ live data streams. Orchestrated with Docker Compose, the system uses Apache Spark’s batch engine to generate fake data. It then feeds that data into a Kafka topic to create a streaming pipeline and analyzes it in two layers: the first layer with Apache Kafka, and the second layer with Spark’s Structured Streaming.  
 
-bu çalışma işinizi görecektir.
-## Projenin Şeması
-![Main Schema of Project.](/assets/main_schema.jpeg "Main Schema of Project.")
+## Project Goals  
+While working with Apache Spark, I struggled to find live data streams where I could pull data without worrying about internet stability, security or unpredictable complexity. As a result, I began generating fake data using Spark’s batch modules. I programmed those batches into a continuous stream and wrote live analytics on top using Spark’s Structured Streaming.
 
-### Producer
+The primary goal of this project is to simulate a live data stream with minimal risk and complexity. The secondary goals are:
+1. To build a variety of live analytics—from the simplest to the most complex—on that stream.  
+2. To gain a hands‑on understanding of Apache Kafka and Apache Spark.  
+3. To deepen my knowledge of Docker orchestration via Docker Compose.  
 
-Bu kısımda, fake veriler üretiyoruz ve bu verileri Raw Stream adı verdiğimiz bir canlı veri akışına gönderiyoruz. Verileri oluştururken Apache Spark kullanıyoruz. Buradaki işlemler proje kaynak kodlarındaki hospitals dizini ile yapılıyor.
+## Use Cases  
+This project is useful if you want to:  
+1. Create a real‑time data stream.  
+2. Experiment with analytics on a real‑time stream.  
+3. Understand how Docker Compose orchestrates multi‑container applications.  
+4. Generate fake data using Apache Spark.  
+5. Write analytics on a live Kafka stream.  
 
-Producer Files: 
-```
+## Project Architecture  
+![Main Schema of Project.](/assets/main_schema.jpeg "Main Schema of Project.")  
+
+### Producer  
+In this component, we generate fake patient records and send them to a live stream called **Raw Stream**. Data generation is implemented with Apache Spark in the `hospitals` directory of the source code.  
+
+**Producer Files:**  
+```  
 hospitals  
-    ├─ atlanta.py  
-    ├─ boston.py  
-    ├─ chicago.py  
-    ├─ dallas.py  
-    ├─ detroit.py  
+├─ atlanta.py  
+├─ boston.py  
+├─ chicago.py  
+├─ dallas.py  
+├─ detroit.py  
+├─ Dockerfile  
+├─ gender_name.csv  
+├─ houston.py  
+├─ jersey.py  
+├─ last_name.csv  
+├─ miami.py  
+├─ newyork.py  
+├─ phoenix.py  
+├─ requirements.txt  
+├─ sanfrancisco.py  
+├─ seattle.py  
+└─ washington.py  
+```  
+
+### Raw Stream  
+![Raw Stream Topic.](/assets/raw_stream.png "Raw Stream Topic.")  
+
+The generated records are written to a Kafka topic named **raw_stream**. This keeps the raw data intact and readily available for alternative processing or coding experiments.  
+
+### Analyzer  
+This part of the project has three main tasks:  
+1. The **distributor** reads from **raw_stream** and routes each record, based on age, into one of three topics: **children**, **adult**, or **senior**.  
+2. The **topics** modules consume from those three age‑based topics, perform analysis on the records, and apply flags.  
+3. The flagged records are then written to the **analyzed_stream** topic.  
+
+**Analyzer Files:**  
+```
+distributor  
+├─ distributor.py  
+├─ Dockerfile  
+└─ requirements.txt  
+
+topics  
+├─ adult  
+│   ├─ Dockerfile  
+│   ├─ entrypoint.sh  
+│   └─ main.py  
+├─ children  
+│   ├─ Dockerfile  
+│   ├─ entrypoint.sh  
+│   └─ main.py  
+└─ senior  
     ├─ Dockerfile  
-    ├─ gender_name.csv
-    ├─ houston.py  
-    ├─ jersey.py  
-    ├─ last_name.csv  
-    ├─ miami.py  
-    ├─ newyork.py  
-    ├─ phoenix.py  
-    ├─ requirements.txt
-    ├─ sanfrancisco.py
-    ├─ seattle.py  
-    └─ washington.py
+    ├─ entrypoint.sh  
+    └─ main.py  
+```  
+
+### Analyzed Stream  
+![Analyzed Stream Topic.](/assets/analyzed_stream.png "Analyzed Stream Topic.")  
+
+Flagged (analyzed) records are written to a Kafka topic named **analyzed_stream**. At this stage, the data is processed and annotated, ready for consumption. To improve readability, a separate consumer application is provided.  
+
+### Consumer  
+![Output of Consumer.](/assets/consumer_output.png "Output of Consumer.")  
+
+The **consumer** directory contains code that reads from **analyzed_stream** and presents the records in the terminal with simple visual cues. Flags added by the analytics modules determine the coloring of each entry, providing an at‑a‑glance view of processed data.  
+
+**Consumer Files:**  
+```  
+consumer  
+├─ Dockerfile  
+├─ main.py  
+└─ requirements.txt  
+```  
+
+## Kafka Topics  
+![Topic Schema of Project.](/assets/topic_schema.jpeg "Topic Schema of Project.")  
+
+This project uses five Kafka topics:  
+- **raw_stream**: holds unprocessed (raw) records.  
+- **children**: contains records for patients under 18.  
+- **adult**: contains records for patients aged 18–65.  
+- **senior**: contains records for patients over 65.  
+- **analyzed_stream**: contains processed and flagged results from **raw_stream**.  
+
+## Anatomy of Fake Records  
+Each record represents a patient’s blood test and is structured as a dictionary. It begins with eight keys/values and expands with additional flags during analysis. Below are the fields for raw and analyzed streams.
+
+#### Raw Stream Record  
+```py
+{
+  "Name": "patient_first_name",
+  "Surname": "patient_last_name",
+  "Age": patient_age,
+  "cbc": "age_group",
+  "bloodValues": { blood_values },
+  "Hospital": "hospital_name",
+  "Gender": "patient_gender",
+  "Time": timestamp_generated_by_producer
+}
 ```
+- **Name**: Patient’s first name (string)  
+- **Surname**: Patient’s last name (string)  
+- **Age**: Patient’s age (integer)  
+- **cbc**: Patient’s age bracket (string) – for convenience during development  
+- **bloodValues**: A nested dictionary of blood test values (dictionary)  
+- **Hospital**: Name of the hospital where the test was performed (string)  
+- **Gender**: Patient’s gender (string)  
+- **Time**: Timestamp when the fake record was generated (timestamp)  
 
-
-### Raw Stream
-
-![Raw Stream Topic.](/assets/raw_stream.png "Raw Stream Topic.")
-
-Oluşturulan veriler Apache Kafka kullanılarak `raw_stream` adında bir topic'e yazılıyor. Böylece tüm ham veriler kolaylıkla bu topicten olduğu gibi -analiz edilmeden- okunabiliyor ve üzerlerinde alternatif kodlamalar yapılabiliyor.
-
-### Analyzer
-
-Projenin bu kısmı üç temel misyonu yerine getirir. 
-1. Topics dizinindeki distributor dizini ile Raw Stream'deki verileri okur. Ardından okuduğu verileri yaşlarına göre children topic'ine, adult topic'ine veya senior topic'ine yazar.
-2. Children, adult ve senior topiclerindeki verileri topics dizini ile analiz eder ve sonuçlar üreterek, verileri flagler.
-3. Flaglediği verileri, topics dizini ile `analyzed_stream` topic'ine gönderir.
-
-Analyzer Files: 
+##### Blood Values Dictionary  
+```py
+{
+  "WBC": white_blood_cell_count,
+  "RBC": red_blood_cell_count,
+  "Hb": hemoglobin,
+  "Hct": hematocrit_percent,
+  "MCV": mean_corpuscular_volume,
+  "MCH": mean_corpuscular_hemoglobin,
+  "MCHC": mean_corpuscular_hemoglobin_concentration
+}
 ```
-distributor
-    ├─ distributor.py
-    ├─ Dockerfile
-    └─ requirements.txt
+- **WBC** (white blood cells, leukocytes)  
+- **RBC** (red blood cells, erythrocytes)  
+- **Hb** (hemoglobin)  
+- **Hct** (hematocrit %)  
+- **MCV** (mean corpuscular volume)  
+- **MCH** (mean corpuscular hemoglobin)  
+- **MCHC** (mean corpuscular hemoglobin concentration)  
 
-topics
-    ├─ adult
-    │   ├─ Dockerfile
-    │   ├─ entrypoint.sh
-    │   └─ main.py
-    ├─ children
-    │   ├─ Dockerfile
-    │   ├─ entrypoint.sh
-    │   └─ main.py
-    └─ senior
-        ├─ Dockerfile
-        ├─ entrypoint.sh
-        └─ main.py
+*(Each metric has its own normal ranges by age/gender, used later for flagging.)*  
+
+#### Analyzed Stream Record  
+```py
+{
+  "Name": "patient_first_name",
+  "Surname": "patient_last_name",
+  "Age": patient_age,
+  "bloodValues": { blood_values },
+  "Hospital": "hospital_name",
+  "Gender": "patient_gender",
+  "Time": timestamp_generated_by_producer,
+  "status(WBC)":  wbc_flag,
+  "status(RBC)":  rbc_flag,
+  "status(Hb)":   hb_flag,
+  "status(Hct)":  hct_flag,
+  "status(MCV)":  mcv_flag,
+  "status(MCH)":  mch_flag,
+  "status(MCHC)": mchc_flag
+}
 ```
+- **`Status(WBC)`** indicates the result of the WBC analysis. For children aged 0–2 years, the ideal range is 6,000–17,500; for children aged 2–12 years, 5,000–15,000; and for those aged 12–18 years, 4,500–13,500. In adults (regardless of gender), the range is 4,000–11,000, and for individuals over 65 it remains the same, 4,000–11,000. If the WBC value falls within the ideal range, the `Status(WBC)` flag is set to `True`; otherwise it is `False` (boolean).
 
-### Analyzed Stream
+- **`Status(RBC)`** indicates the result of the RBC analysis. For children aged 0–2 years, the ideal range is 3,900,000–5,500,000; for children aged 2–12 years, 4,000,000–5,200,000; and for those aged 12–18 years, 4,100,000–5,600,000. In adults, the ideal range is 4,700,000–6,100,000 for males and 4,200,000–5,400,000 for females. For females over 65, it is 4,100,000–5,100,000, and for males over 65, 4,500,000–5,900,000. If the RBC value falls within the ideal range, the `Status(RBC)` flag is set to `True`; otherwise it is `False` (boolean).
 
-![Analyzed Stream Topic.](/assets/analyzed_stream.png "Analyzed Stream Topic.")
+- **`Status(Hb)`** indicates the result of the Hb analysis. For children aged 0–2 years, the ideal range is 10.0–14.0 g/dL; for ages 2–12, 11.5–15.5 g/dL; and for those aged 12–18, it varies by sex—12.0–15.0 g/dL for girls and 13.0–16.0 g/dL for boys. In adult males (18–65), the ideal range is 13.5–17.5 g/dL, while in adult females it is 12.0–15.5 g/dL. For seniors, the ideal range is 12.0–15.0 g/dL for women and 13.0–17.0 g/dL for men. If the Hb value falls within the ideal range, the `Status(Hb)` flag is set to `True`; otherwise it is `False` (boolean).
 
-Flaglenen veriler Apache Kafka kullanılarak `analyzed_stream` adında bir topic'e yazılır. Burada artık veriler işlenmiş ve raporlanmış bir biçimde yer almaktadır ve kullanıcı okunmasına hazırdır. Ancak elbette veri görselleştirmesi için bir consumer yazılması verilerin okunabilirliğini artıracaktır. Bunun içinde bir consumer hazırladım.
+- **`Status(Hm)`** indicates the result of the Hm (hematocrit) analysis. For children aged 0–2 years, the ideal range is 33–43 %; for ages 2–12, 34–42 %; and for those aged 12–18, it varies by sex—36–45 % for girls and 40–50 % for boys. In adult males (18–65), the ideal range is 41–50 %, while in adult females it is 36–44 %. For seniors, the ideal range is 36–46 % for women and 39–50 % for men. If the Hm value falls within the ideal range, the `Status(Hm)` flag is set to `True`; otherwise it is `False` (boolean).
 
+- **`Status(MCV)`** indicates the result of the MCV analysis. For children aged 0–2 years, the ideal range is 70–86 fL; for ages 2–12, 75–87 fL; and for those aged 12–18, 80–96 fL. In adults and seniors (both genders, > 18), the ideal range is 80–100 fL. If the MCV value falls within the ideal range, the `Status(MCV)` flag is set to `True`; otherwise it is `False` (boolean).
 
-### Consumer
+- **`Status(MCH)`** indicates the result of the MCH analysis. For children aged 0–2 years, the ideal range is 24–30 pg; for ages 2–12, 26–32 pg; and for those aged 12–18, 28–34 pg. In adults and seniors (both genders, > 18), the ideal range is 27–33 pg. If the MCH value falls within the ideal range, the `Status(MCH)` flag is set to `True`; otherwise it is `False` (boolean).
 
-![Output of Consumer.](/assets/consumer_output.png "Output of Consumer.")
-
-Adından da anlaşılacağı üzere consumer dizininde kodladığım, analiz edilmiş verileri görmemizi ve basit bir terminal görselleştirmesi sunmamızı sağlayan kısım. Burada flaglenmiş veriler, topics tarafından kendilerine yapıştırılan flaglere göre renklendirilir ve konsola yazılır. Böylece kullanıcı verileri analiz edilmiş bir biçimde görme fırsatı elde eder.
-
-Consumer Files: 
-```
-consumer
-    ├─ Dockerfile
-    ├─ main.py
-    └─ requirements.txt
-```
-
-## Topics
-![Main Schema of Project.](/assets/topic_schema.jpeg "TMain Schema of Project.")
-
-Projede sadece 5 Apache Kafka topic'i bulunuyor. 
-
-- Raw Stream topic'i işlenmemiş verileri barındırıyor. 
-- Children topic'i Raw Stream topic'inde yaşı 18'in altındaki kayıtları barındırıyor. 
-- Adult topic'i Raw Stream topic'inde yaşı 18 ile 65 arasındaki kayıtları barındırıyor. 
-- Senior topic'i ise Raw Stream topic'inde bulunan 65 yaşının üstündeki kayıtları barındırıyor.
-- Analyzed Stream topic'i Raw Stream topic'indeki verilerin analiz edilmiş sonuçlarını barındırıyor.
-
-## Sahte Verilerin Anatomisi
-
-Her bir veri, hastanede kan testi yaptıran hasta kaydını temsil eder. Her biri dictionary ögesidir. En başta 8 key'den ve 8 value'den oluşurken sonradan bu sayı flagler ile birlikte artış göstermektedir. Aşağıda Raw Stream verilerinin açıklaması, `bloodValues` ögesindeki key-value çiftlerinin anlamları ve Analyzed Stream verilerinin açıklamaları yer almaktadır.
-
-#### Raw Stream:
-```Py
-"Name":"hasta_adi",
-"Surname":"hasta_soyadi",
-"Age":hasta_yasi,
-"cbc":"hasta_yas_araligi",
-"bloodValues":{hasta_kan_degerleri},
-"Hospital":"test_yapilan_hastane",
-"Gender":"hasta_cinsiyeti",
-"Time":verinin_sisteme_giris_zamani
-```
-
-- `Name`, hastanın adıdır (string).  
-- `Surname`, hastanın soyadıdır (string).  
-- `Age`, hastanın yaşıdır (integer).  
-- `cbc`, hastanın yaş aralığıdır (string) -Dipnot: Bu kısım geliştirme esnasındaki bazı kolaylıklardan dolayı konulmuştur, kaldırılacaktır.- (string).  
-- `bloodValues`, hastanın kan değerlerini içeren bir başka dictionary ögesidir -Bu kısım aşağıda ayrıntılı açıklanacaktır.- (dictionary).  
-- `Hospital`, hastanın kan testini yaptırdığı hastanenin adıdır (string).  
-- `Gender`, hastanın cinsiyetidir (string).  
-- `Time`, hastanın kan testinin sisteme yüklendiği zamandır -Bir başka deyişle, producer'ın sahte veriyi ürettiği zamandır.- (timestamp). 
-
-#### `bloodValues` Çiftlerinin Anlamları:
-```Py
-"WBC":beyaz_kan_hucreleri-lokositler,
-"RBC":kirmizi_kan_hucreleri-eritrositler,
-"Hb":hemoglobin,
-"Hct":"hematokrit%",
-"MCV":ortalama_eritrosit_hacmi,
-"MCH":ortalama_hemoglobin_miktari,
-"MCHC":"ortalama_hemoglobin_konsantrasyonu%"
-```
-
-- WBC (White Blood Cell, Beyaz Kan Hücreleri - Lökositler), bağışıklık sisteminin bir parçasıdır. Vücuda giren enfeksiyonlarla savaşır. Düşükse bağışıklık zayıflamış olabilir, yüksekse enfeksiyon veya iltihap belirtisi olabilir.
-- RBC (Red Blood Cell, Kırmızı Kan Hücreleri - Eritrositler), oksijen taşıyan hücrelerdir. Düşüklüğü anemiye, fazlalığı bazı kan hastalıklarına işaret edebilir.
-- Hb (Hemoglobin), kırmızı kan hücrelerinde bulunan, oksijen taşıyan proteindir. Düşük olması kansızlığı (anemi) gösterebilir.
-- Hct (Hematocrit), Kanın ne kadarının kırmızı kan hücrelerinden oluştuğunu gösterir. Düşükse anemi, yüksekse sıvı kaybı veya bazı hastalıklar düşünülebilir.
-- MCV (Mean Corpuscular Volume, Ortalama Eritrosit Hacmi), kırmızı kan hücrelerinin büyüklüğünü gösterir. Küçükse demir eksikliği, büyükse B12 veya folik asit eksikliği olabilir.
-- MCH (Mean Corpuscular Hemoglobin, Ortalama Hemoglobin Miktarı), her kırmızı kan hücresinde ne kadar hemoglobin bulunduğunu gösterir. Düşüklük demir eksikliğini, yükseklik B12 eksikliğini gösterebilir.
-- MCHC (Mean Corpuscular Hemoglobin Concentration, Ortalama Hemoglobin Konsantrasyonu), kırmızı kan hücrelerindeki hemoglobin yoğunluğunu gösterir. Düşüklüğü anemiye, yüksekliği bazı nadir kan hastalıklarına işaret edebilir.
-
-#### Analyzed Stream:
-
-```Py
-"Name":"hasta_adi",
-"Surname":"hasta_soyadi",
-"Age":hasta_yasi,
-"bloodValues":{hasta_kan_degerleri},
-"Hospital":"test_yapilan_hastane",
-"Gender":"hasta_cinsiyeti",
-"Time":verinin_sisteme_giris_zamani,
-"status(WBC)":wbc_analiz_sonucu,
-"status(RBC)":rbc_analiz_sonucu,
-"status(Hb)":hb_analiz_sonucu,
-"status(Hct)":hct_analiz_sonucu,
-"status(MCV)":mcv_analiz_sonucu,
-"status(MCH)":mch_analiz_sonucu,
-"status(MCHC)":mchc_analiz_sonucu
-```
-
-- `Status(WBC)`, `WBC` analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan 6000-17500 arasıdır. 2-12 yaş çocuklar için 5000-15000 arası ve 12-18 yaş çocuklar için ideal aralık 4500-13500 arasıdır. Yetişkinlerde ise bu aralık cinsiyet fark etmeksizin 4000 ile 11000 arasındadır. 65 yaş üstü bireylerde de tıpkı yetişkinlerde olduğu gibi cinsiyet fark etmeksizin 4000-11000 arasındadır. İdeal aralıklarda olan `WBC` için `Status(WBC)` flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
-
-- `Status(RBC)`, `RBC` analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan 3900000-5500000 arasıdır. 2-12 yaş çocuklar için 4000000-5200000 arası ve 12-18 yaş çocuklar için ideal aralık 4100000-5600000 arasıdır. Yetişkinlerde erkeklerde ise bu aralık 4700000-6100000 olarak belirlenmiştir, yetişkin kadınlardaki aralık ise 4200000-5400000'dir. 65 yaş üstü kadınlarda bu aralık 4100000-5100000 iken, 65 yaş üstü erkeklerde 4500000-5900000 arası idealdir. İdeal aralıklarda olan `RBC` için `Status(RBC)` flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
-
-- `Status(Hb)`, `Hb` analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan 10.0-14.0 arasıdır. 2-12 yaş çocuklar için 11.5-15.5 arası ve 12-18 yaş çocuklar için ideal aralık kız ve erkek çocuklar için değişmektedir. Kız çocuklar için ideal aralık 12.0-15.0 iken, erkek çocuklarda bu aralık 13.0-16.0'dır. Yetişkin erkeklerde bu aralık 13.5-17.5 arası iken, yetişkin kadınlarda 12.0-15.5 arasıdır. 65 yaş üstü kadınlarda ideal aralık 12.0-15.0 iken, 65 yaş üstü erkeklerde 13.0-17.0'dir. İdeal aralıklarda olan `Hb` için `Status(Hb)` flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
-
-- `Status(Hm)`, `Hm` analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan %33-%43 arasıdır. 2-12 yaş çocuklar için %34-%42 arası ve 12-18 yaş çocuklar için ideal aralık kız ve erkek çocuklar için değişmektedir. Kız çocuklar için ideal aralık %36-%45 iken, erkek çocuklarda bu aralık %40-%50'dır. Yetişkin erkeklerde bu oran %41 ile %50 arasında iken, yetişkin kadınlarda bu oran %36-%44 arasıdır. 65 yaş üstü kadınlarda ideal oranlar %36 ile %46 arasındayken, 65 yaş üstü erkeklerde %39-%50 arasıdır. İdeal aralıklarda olan `Hm` için `Status(Hm)` flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
-
-- `Status(MCV)`, `MCV` analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan 70-86 arasıdır. 2-12 yaş çocuklar için 75-87 arası ve 12-18 yaş çocuklar için ideal aralık 80-96 arasıdır. Yetişkinlerde ise bu aralık cinsiyet fark etmeksizin 80-100 arasıdır. 65 yaş üstü bireylerde de ideal aralık cinsiyet fark etmeksizin 80-100 arasıdır. İdeal aralıklarda olan `MCV` için `Status(MCV)` flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
-
-- `Status(MCH)`, `MCH` analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal olan 24-30 arasıdır. 2-12 yaş çocuklar için 26-32 arası ve 12-18 yaş çocuklar için ideal aralık 28-34 arasıdır. Yetişkinlerde ise bu aralık cinsiyet fark etmeksizin 27-33 arasıdır. 65 üstü bireylerde de ideal aralık cinsiyet fark etmeksizin 27-33 arasıdır. İdeal aralıklarda olan `MCH` için `Status(MCH)` flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
-
-- `Status(MCHC)`, `MCHC` analizinin sonucunu ifade eder. 0-2 yaş çocuklar için ideal oran %30-%36 arasıdır. 2-18 yaş çocuklar için ise ideal oran %32-%36'dır. Yetişkinlerde ise bu aralık cinsiyet fark etmeksizin %32-%36 arasıdır. 65 yaş üstü bireylerde ideal oran cinsiyet fark etmeksizin %32-%36 arasıdır. İdeal aralıklarda olan `MCHC` için `Status(MCHC)` flag'i `True` olarak işaretlenir, aksi durumda `False` olur (bool).
+- **`Status(MCHC)`** indicates the result of the MCHC analysis. For children aged 0–2 years, the ideal range is 30–36 %; for ages 2–18, 32–36 %; and in adults and seniors (both genders, > 18), the ideal range remains 32–36 %. If the MCHC value falls within the ideal range, the `Status(MCHC)` flag is set to `True`; otherwise it is `False` (boolean).
