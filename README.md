@@ -4,6 +4,8 @@ A Simple Simulation of Live Data Streaming for 13 Hospitals
 ## Overview  
 This project simulates a small portion of hospitals’ live data streams. Orchestrated with Docker Compose, the system uses Apache Spark’s batch engine to generate fake data. It then feeds that data into a Kafka topic to create a streaming pipeline and analyzes it in two layers: the first layer with Apache Kafka, and the second layer with Spark’s Structured Streaming.  
 
+[Türkçe karşılığı için tıklayın](README.tr.md)
+
 ## Project Goals  
 While working with Apache Spark, I struggled to find live data streams where I could pull data without worrying about internet stability, security or unpredictable complexity. As a result, I began generating fake data using Spark’s batch modules. I programmed those batches into a continuous stream and wrote live analytics on top using Spark’s Structured Streaming.
 
